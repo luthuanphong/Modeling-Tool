@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import editor.canvas.Clip;
+import editor.canvas.ClipType;
 import editor.commands.Command;
 import editor.commands.CommandMove;
 import editor.utils.EditorInterface;
@@ -28,10 +29,12 @@ public class ToolSelect implements Tool {
 		}
 		clear();
 		for (Clip c : i.getSelection().getClips()) {
-			left.add(start_x - c.getStart().getX());
-			top.add(start_y - c.getStart().getY());
-			right.add(c.getEnd().getX() - start_x);
-			bottom.add(c.getEnd().getY() - start_y);
+			if(c.getType() != ClipType.Arc) {
+				left.add(start_x - c.getStart().getX());
+				top.add(start_y - c.getStart().getY());
+				right.add(c.getEnd().getX() - start_x);
+				bottom.add(c.getEnd().getY() - start_y);
+			}
 		}
 		return null;
 	}
@@ -40,8 +43,10 @@ public class ToolSelect implements Tool {
 	public void drag(EditorInterface i, MouseEvent e) {
 		List<Clip> clips = i.getSelection().getClips();
 		for (int index = 0; index < clips.size(); index++) {
-			clips.get(index).setStart(e.getX() - left.get(index), e.getY() - top.get(index));
-			clips.get(index).setEnd(e.getX() + right.get(index), e.getY() + bottom.get(index));
+			if(clips.get(index).getType() != ClipType.Arc) {
+				clips.get(index).setStart(e.getX() - left.get(index), e.getY() - top.get(index));
+				clips.get(index).setEnd(e.getX() + right.get(index), e.getY() + bottom.get(index));
+			}
 		}
 	}
 

@@ -11,7 +11,10 @@ public class Board {
         private List<Clip> arcClips = new ArrayList<Clip>();
 
 	public List<Clip> getClips() {
-		return clips;
+		List<Clip> temp = new ArrayList<>();
+		temp.addAll(arcClips);
+		temp.addAll(placeClips);
+		return temp;
 	}
         
         public List<Clip> getPlaceClip(){
@@ -31,11 +34,23 @@ public class Board {
                     case Arc:
                         arcClips.add(toAdd);
                         break;
+				default:
+					break;
                 }
 	}
 
 	public void removeClip(Clip toRemove) {	
 		clips.remove(toRemove);
+		switch (toRemove.getType()) {
+		case Place:
+			placeClips.remove(toRemove);
+			break;
+		case Arc:
+			arcClips.add(toRemove);
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void addClip(List<Clip> toAdd) {
@@ -53,6 +68,8 @@ public class Board {
 	public void draw(GraphicsContext ctx) {
 		ctx.setFill(Colors.BOARD);
 		ctx.fillRect(0, 0, ctx.getCanvas().getWidth(), ctx.getCanvas().getHeight());		
-		clips.forEach(clip -> clip.draw(ctx));
+		//clips.forEach(clip -> clip.draw(ctx));
+		arcClips.forEach(clip -> clip.draw(ctx));
+		placeClips.forEach(clip -> clip.draw(ctx));
 	}
 }

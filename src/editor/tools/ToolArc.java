@@ -26,14 +26,16 @@ public class ToolArc implements Tool {
         Clip selectClip = getSelectedClip(i.getPlaceClip(), e.getX(), e.getY());
         if(selectClip != null){
             if(arcPos.isEmpty()){
-                arcPos.add(new Point2D(selectClip.getOutPoint().getX(),
-                        selectClip.getOutPoint().getY()));
+                arcPos.add(new Point2D(selectClip.getCenterX(),
+                        selectClip.getCenterY()));
                 outputedClip = selectClip;
             }else if(arcPos.size() == 1){
-                arcPos.add(new Point2D(selectClip.getInputPoint().getX(),
-                        selectClip.getOutPoint().getY()));
+                arcPos.add(new Point2D(selectClip.getCenterX(),
+                        selectClip.getCenterY()));
                 inputedClip = selectClip;
                 ClipArc clip = new ClipArc(arcPos.get(0), arcPos.get(1));
+                clip.setInputPlace(inputedClip);
+                clip.setOutputPlace(outputedClip);
                 arc.add(clip);
                 outputedClip.getOutArc().add(clip);
                 inputedClip.getInputArc().add(clip);

@@ -56,5 +56,8 @@ public class Icons {
 	public static ImageView getImageToken() {
 		return new ImageView(new Image("res/img/token.png"));
 	}
-
+	
+	public static ImageView getImageConfig() {
+		return new ImageView(new Image("res/img/config.png"));
+	}
 }

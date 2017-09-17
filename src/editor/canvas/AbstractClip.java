@@ -7,13 +7,15 @@ import javafx.scene.paint.Color;
 
 public abstract class AbstractClip implements Clip {
 	
-	private Point2D start, end, center,input,output;
+	private Point2D start, end, center;
 	private Color color = Colors.NETBORDCOLOR;
 	private boolean selected = false, hovered = false;
 	private String label, id;
-        private ClipType type;
-        private List<Clip> inputArc;
-        private List<Clip> outputArc;
+    private ClipType type;
+    private List<Clip> inputArc;
+    private List<Clip> outputArc;
+    private Clip inputPlace;
+    private Clip outputPlace;
 
 	public AbstractClip() {
 	}
@@ -141,6 +143,30 @@ public abstract class AbstractClip implements Clip {
     @Override
     public Point2D getOutPoint() {
         return new Point2D(getCenterX() + getWidth()/2, getCenterY());
+    }
+    
+    @Override
+    public Clip getInputPlace() {
+    	// TODO Auto-generated method stub
+    	return this.inputPlace;
+    }
+    
+    @Override
+    public Clip getOutputPlace() {
+    	// TODO Auto-generated method stub
+    	return this.outputPlace;
+    }
+    
+    @Override
+    public void setInputPlace(Clip inputPlace) {
+    	// TODO Auto-generated method stub
+    	this.inputPlace = inputPlace;
+    }
+    
+    @Override
+    public void setOutputPlace(Clip outputPlace) {
+    	// TODO Auto-generated method stub
+    	this.outputPlace = outputPlace;
     }
     
 }

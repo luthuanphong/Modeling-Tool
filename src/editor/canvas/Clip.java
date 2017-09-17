@@ -123,15 +123,23 @@ public interface Clip {
 	// Cloning
 	public Clip copy();
         
-        public ClipType getType();
+    public ClipType getType();
         
-        public void setType(ClipType type);
+    public void setType(ClipType type);
         
-        public List<Clip> getInputArc();
+    public List<Clip> getInputArc();
         
-        public List<Clip> getOutArc();
+    public List<Clip> getOutArc();
         
-        public Point2D getInputPoint();
+    public Point2D getInputPoint();
         
-        public Point2D getOutPoint();
+    public Point2D getOutPoint();
+    
+    public Clip getInputPlace();
+    
+    public Clip getOutputPlace();
+    
+    public void setInputPlace(Clip inputPlace);
+    
+    public void setOutputPlace(Clip outputPlace);
 }

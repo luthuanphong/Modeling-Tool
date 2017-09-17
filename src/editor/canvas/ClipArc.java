@@ -35,6 +35,8 @@ public class ClipArc extends AbstractClip {
 	}
 	
 	private void drawLabel(GraphicsContext ctx) {
+		ctx.setFill(Colors.NETBORDCOLOR);
+		ctx.fillText(this.id, getCenterX()-10, getCenterY()-10, 100);
 	}
 
 	private void drawForeground(GraphicsContext ctx) {

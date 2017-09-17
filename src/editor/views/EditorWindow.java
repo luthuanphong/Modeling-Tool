@@ -32,7 +32,7 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		// -- Setup
 		board = new Board();
 		selection = new Selection();
-		canvas = new Canvas(600, 400);
+		canvas = new Canvas(1024, 768);
 		tool = new ToolSelect();
 		ctx = canvas.getGraphicsContext2D();
 		Clipboard.getInstance().addListener(this);
@@ -72,7 +72,7 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		VBox editor = new VBox(menuBar, toolBar, canvas);
 
 		Scene scene = new Scene(editor);
-                stage.resizableProperty().setValue(Boolean.FALSE);
+        stage.resizableProperty().setValue(Boolean.FALSE);
 		stage.setTitle("Petrinet Framework Editor");
 		stage.setScene(scene);
 		stage.show();

@@ -34,13 +34,15 @@ public class CommandMove implements Command {
 			clips.get(i).setEnd(ex + right.get(i), ey + bottom.get(i));
                         
                         for(Clip c : clips.get(i).getInputArc()){
-                            c.setEnd(clips.get(i).getInputPoint().getX(),
-                                    clips.get(i).getInputPoint().getY());
+                            //c.setEnd(clips.get(i).getInputPoint().getX(),
+                                   // clips.get(i).getInputPoint().getY());
+                        	c.setEnd(clips.get(i).getCenterX(),clips.get(i).getCenterY());
                         }
                         
                         for(Clip c : clips.get(i).getOutArc()){
-                            c.setStart(clips.get(i).getOutPoint().getX(),
-                                    clips.get(i).getOutPoint().getY());
+                            //c.setStart(clips.get(i).getOutPoint().getX(),
+                                    //clips.get(i).getOutPoint().getY());
+                        	c.setStart(clips.get(i).getCenterX(),clips.get(i).getCenterY());
                         }
                     }else if(clips.get(i).getType() == ClipType.Transition){
                         

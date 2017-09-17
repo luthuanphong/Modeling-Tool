@@ -1,6 +1,7 @@
 package editor.views;
 
 import editor.actions.ActionArc;
+import editor.actions.ActionConfig;
 import editor.actions.ActionCopy;
 import editor.actions.ActionDelete;
 import editor.actions.ActionExport;
@@ -24,6 +25,7 @@ public class EditorToolBar extends ToolBar {
 	private Button btnNew, btnImport, btnExport;
 	private Button btnUndo, btnRedo, btnCopy, btnPaste, btnDelete;
 	private Button btnSelect, btnPlace, btnTransition, btnArc, btnToken;
+	private Button btnConfig;
 
 	public EditorToolBar(EditorWindow editor) {
 		this.editor = editor;
@@ -32,7 +34,7 @@ public class EditorToolBar extends ToolBar {
 		setAlts();
 		setActions();
 		getItems().addAll(btnNew, btnImport, btnExport, new Separator(), btnCopy, btnPaste, new Separator(), btnUndo,
-				btnRedo, btnDelete, new Separator(), btnSelect, btnPlace, btnTransition, btnArc, btnToken);
+				btnRedo, btnDelete, new Separator(), btnSelect, btnPlace, btnTransition, btnArc, btnConfig, btnToken);
 	}
 
 	private void initialize() {
@@ -51,6 +53,7 @@ public class EditorToolBar extends ToolBar {
 		btnTransition = new Button();
 		btnArc = new Button();
 		btnToken = new Button();
+		btnConfig = new Button();
 	}
 
 	private void setIcons() {
@@ -68,7 +71,7 @@ public class EditorToolBar extends ToolBar {
 		btnTransition.setGraphic(Icons.getImageTransition());
 		btnArc.setGraphic(Icons.getImageArc());
 		btnToken.setGraphic(Icons.getImageToken());
-
+		btnConfig.setGraphic(Icons.getImageConfig());
 	}
 
 	private void setAlts() {
@@ -86,6 +89,7 @@ public class EditorToolBar extends ToolBar {
 		btnTransition.setTooltip(new Tooltip("Transition"));
 		btnArc.setTooltip(new Tooltip("Arc"));
 		btnToken.setTooltip(new Tooltip("Token"));
+		btnConfig.setTooltip(new Tooltip("Config"));
 	}
 
 	private void setActions() {
@@ -103,6 +107,7 @@ public class EditorToolBar extends ToolBar {
 		btnTransition.setOnAction(e -> new ActionTransition(editor).actionPerformed(e));
 		btnArc.setOnAction(e -> new ActionArc(editor).actionPerformed(e));
 		btnToken.setOnAction(e -> new ActionToken(editor).actionPerformed(e));
+		btnConfig.setOnAction(e -> new ActionConfig(editor).actionPerformed(e));
 	}
 
 	public Button getButtonSelect() {
