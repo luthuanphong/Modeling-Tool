@@ -25,11 +25,11 @@ public class ToolArc implements Tool {
         List<Clip> arc = new ArrayList<Clip>();
         Clip selectClip = getSelectedClip(i.getPlaceClip(), e.getX(), e.getY());
         if(selectClip != null){
-            if(arcPos.isEmpty()){
+            if (arcPos.isEmpty()) {
                 arcPos.add(new Point2D(selectClip.getCenterX(),
                         selectClip.getCenterY()));
                 outputedClip = selectClip;
-            }else if(arcPos.size() == 1){
+            } else if (arcPos.size() == 1) {
                 arcPos.add(new Point2D(selectClip.getCenterX(),
                         selectClip.getCenterY()));
                 inputedClip = selectClip;
