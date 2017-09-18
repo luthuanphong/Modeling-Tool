@@ -34,8 +34,8 @@ public class Board {
                     case Arc:
                         arcClips.add(toAdd);
                         break;
-				default:
-					break;
+                    default:
+			break;
                 }
 	}
 
@@ -46,7 +46,7 @@ public class Board {
 			placeClips.remove(toRemove);
 			break;
 		case Arc:
-			arcClips.add(toRemove);
+			arcClips.remove(toRemove);
 			break;
 		default:
 			break;
@@ -59,10 +59,24 @@ public class Board {
 
 	public void removeClip(List<Clip> toRemove) {
 		clips.removeAll(toRemove);
+                for(Clip c : toRemove){
+                    switch(c.getType()){
+                        case Place :
+                            placeClips.remove(c);
+                            break;
+                        case Arc:
+                            arcClips.remove(c);
+                            break;
+                        default :
+                            break;
+                    }
+                }
 	}
 	
 	public void clear() {
 		clips.clear();
+                arcClips.clear();
+                placeClips.clear();
 	}
 
 	public void draw(GraphicsContext ctx) {
