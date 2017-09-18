@@ -1,5 +1,6 @@
 package editor.actions;
 
+import editor.views.EditorConfig;
 import editor.views.EditorWindow;
 import javafx.event.ActionEvent;
 
@@ -14,6 +15,6 @@ public class ActionConfig implements Action {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		new EditorConfig(this.editor.getData()).Show();
 	}
 }

@@ -10,6 +10,7 @@ import editor.tools.ToolSelect;
 import editor.utils.Clipboard;
 import editor.utils.ClipboardListener;
 import editor.utils.EditorInterface;
+import editor.utils.InitializeData;
 import editor.utils.Selection;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -27,6 +28,7 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 	private EditorMenuBar menuBar;
 	private EditorToolBar toolBar;
 	private GraphicsContext ctx;
+	private InitializeData data;
 
 	public EditorWindow(Stage stage) {
 		// -- Setup
@@ -40,7 +42,7 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		
 		menuBar = new EditorMenuBar(this);
 		toolBar = new EditorToolBar(this);
-		
+		data = new InitializeData();
 		
 		// -- Mouse Events
 		updateBoard();
@@ -116,7 +118,11 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		return commandStack;
 	}
         
-        public List<Clip> getPlaceClip(){
-            return this.board.getPlaceClip();
-        }
+    public List<Clip> getPlaceClip(){
+        return this.board.getPlaceClip();
+    }
+    
+    public InitializeData getData () {
+    	return this.data;
+    }
 }

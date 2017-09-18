@@ -15,20 +15,20 @@
                         <Label layoutX="14.0" layoutY="14.0" text="Sensor sending rate" />
                         <Label layoutX="14.0" layoutY="39.0" text="Min :" />
                         <Label layoutX="272.0" layoutY="39.0" text="Max :" />
-                        <TextField id="minSensorSendingRate" layoutX="45.0" layoutY="35.0" />
-                        <TextField id="maxSensorSendingRate" layoutX="307.0" layoutY="35.0" />
+                        <TextField fx:id="minSensorSendingRate" layoutX="45.0" layoutY="35.0" />
+                        <TextField fx:id="maxSensorSendingRate" layoutX="307.0" layoutY="35.0" />
                         <Label layoutX="14.0" layoutY="66.0" text="Sensor processing rate" />
                         <Label layoutX="14.0" layoutY="90.0" text="Min :" />
                         <Label layoutX="272.0" layoutY="90.0" text="Max :" />
-                        <TextField id="minSensorProcessingRate" layoutX="45.0" layoutY="86.0" />
-                        <TextField id="maxSensorProcessingRate" layoutX="307.0" layoutY="86.0" />
+                        <TextField fx:id="minSensorProcessingRate" layoutX="45.0" layoutY="86.0" />
+                        <TextField fx:id="maxSensorProcessingRate" layoutX="307.0" layoutY="86.0" />
                         <Label layoutX="14.0" layoutY="121.0" text="Channel sending rate" />
                         <Label layoutX="14.0" layoutY="145.0" text="Min :" />
                         <Label layoutX="273.0" layoutY="145.0" text="Max :" />
-                        <TextField id="minChannelSendingRate" layoutX="45.0" layoutY="141.0" />
-                        <TextField id="maxChannelSendingRate" layoutX="307.0" layoutY="141.0" />
+                        <TextField fx:id="minChannelSendingRate" layoutX="45.0" layoutY="141.0" />
+                        <TextField fx:id="maxChannelSendingRate" layoutX="307.0" layoutY="141.0" />
                         <Label layoutX="14.0" layoutY="190.0" text="Number  of package :" />
-                        <TextField layoutX="134.0" layoutY="186.0" />
+                        <TextField fx:id="numberOfPackage" layoutX="134.0" layoutY="186.0" />
                      </children>
                   </AnchorPane>
               </content>
