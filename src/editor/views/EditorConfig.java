@@ -7,10 +7,14 @@
 package editor.views;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import editor.canvas.Clip;
 import editor.utils.InitializeData;
+import javafx.beans.property.ReadOnlyFloatWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +22,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogEvent;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 /**
@@ -45,7 +51,18 @@ public class EditorConfig extends Dialog<Object> {
     private TextField maxChannelSendingRate;
     @FXML
     private TextField numberOfPackage;
-    
+    @FXML
+    private TableView<Clip> sensorTable;
+    @FXML
+    private TableColumn<Clip,String> sensorId;
+    @FXML
+    private TableColumn<Clip,String> sensorName;
+    @FXML
+    private TableColumn<Clip,String> sensorType;
+    @FXML
+    private TableColumn<Clip,String> sensorToken;
+    @FXML
+    private TableColumn<Clip,String> sensorEnergy;
     /**
      * Dialog constructor used to set up basic information
      * @param data
@@ -71,6 +88,7 @@ public class EditorConfig extends Dialog<Object> {
         this.getDialogPane().setContent(this.uiLoader.getRoot());
         this.show(); 
         this.InitTextContent();
+        this.InitTableData();
     }
     
     /**
@@ -113,6 +131,14 @@ public class EditorConfig extends Dialog<Object> {
 		});
     }
     
+    private void InitTableData () {
+    	this.sensorTable.setItems(data.getSensorClip());
+    	this.sensorId.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getId()));
+    	this.sensorName.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getName()));
+    	this.sensorType.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getSensorType()));
+    	this.sensorToken.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getToken()));
+    	this.sensorEnergy.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getEnergy()+""));
+    }
     
     /**
      * Set up default content for text field

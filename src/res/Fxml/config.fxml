@@ -37,12 +37,13 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="8.0" layoutY="76.0" prefHeight="287.0" prefWidth="585.0">
+                        <TableView fx:id="sensorTable" layoutX="8.0" layoutY="76.0" prefHeight="287.0" prefWidth="585.0">
                           <columns>
-                            <TableColumn prefWidth="150.0" text="Id" />
-                            <TableColumn prefWidth="150.0" text="Name" />
-                              <TableColumn prefWidth="150.0" text="Sensor type" />
-                              <TableColumn prefWidth="150.0" text="Token" />
+                            <TableColumn fx:id="sensorId" prefWidth="120.0" text="Id" />
+                            <TableColumn fx:id="sensorName" prefWidth="120.0" text="Name" />
+                              <TableColumn fx:id="sensorType" prefWidth="120.0" text="Sensor type" />
+                              <TableColumn fx:id="sensorToken" prefWidth="120.0" text="Token" />
+                              <TableColumn fx:id="sensorEnergy" prefWidth="120.0" text="Energy" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>

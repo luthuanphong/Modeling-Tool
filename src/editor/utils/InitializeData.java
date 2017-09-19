@@ -6,6 +6,11 @@
 
 package editor.utils;
 
+import java.util.Map;
+
+import editor.canvas.Clip;
+import javafx.collections.ObservableList;
+
 /**
  *
  * @author phongtl.hf
@@ -19,6 +24,8 @@ public class InitializeData {
     private String minChannelSendingRate = "1";
     private String maxChannelSendingRate = "5";
     private String numberOfPackage = "10";
+    private ObservableList<Clip> sensorClip;
+    private ObservableList<Clip> channelClip;
     
     public void setMinSensorSendingRate (String value) {
         this.minSensorSendingRate = value;
@@ -48,6 +55,14 @@ public class InitializeData {
         this.numberOfPackage = value;
     }
     
+    public void setSensorClip(ObservableList<Clip> value) {
+    	this.sensorClip = value;
+    }
+    
+    public void setChannelClip (ObservableList<Clip> value) {
+    	this.channelClip = value;
+    }
+    
     public String getMinSensorSendingRate () {
         return this.minSensorSendingRate;
     }
@@ -74,5 +89,13 @@ public class InitializeData {
     
     public String getNumberOfPackage () {
         return this.numberOfPackage;
+    }
+    
+    public ObservableList<Clip> getSensorClip () {
+    	return this.sensorClip;
+    }
+    
+    public ObservableList<Clip> getChannelClip () {
+    	return this.channelClip;
     }
 }

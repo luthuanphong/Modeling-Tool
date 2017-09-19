@@ -1,7 +1,10 @@
 package editor.canvas;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
@@ -10,12 +13,15 @@ public abstract class AbstractClip implements Clip {
 	private Point2D start, end, center;
 	private Color color = Colors.NETBORDCOLOR;
 	private boolean selected = false, hovered = false;
-	private String label, id;
     private ClipType type;
     private List<Clip> inputArc;
     private List<Clip> outputArc;
     private Clip inputPlace;
     private Clip outputPlace;
+    protected String label, id;
+    private int sensorType = 3;
+    private float energy = 100.0f;
+    private int Token = 0;
 
 	public AbstractClip() {
 	}
@@ -169,4 +175,60 @@ public abstract class AbstractClip implements Clip {
     	this.outputPlace = outputPlace;
     }
     
+    @Override
+    public void setName(String value) {
+    	// TODO Auto-generated method stub
+    	this.id = value;
+    }
+    
+    @Override
+    public String getName() {
+    	// TODO Auto-generated method stub
+    	return this.id;
+    }
+    
+    @Override
+    public void setSensorType(int value) {
+    	// TODO Auto-generated method stub
+    	this.sensorType = value;
+    }
+    
+    @Override
+    public String getSensorType() {
+    	// TODO Auto-generated method stub
+    	switch (this.sensorType) {
+		case 1:
+			return "Source";			
+		case 2:
+			return "Sink";
+		case 3:
+			return "Intermediate";
+		default:
+			return "";
+		}
+    }
+    
+    @Override
+    public void setEnergy(float value) {
+    	// TODO Auto-generated method stub
+    	this.energy = value;
+    }
+    
+    @Override
+    public float getEnergy() {
+    	// TODO Auto-generated method stub
+    	return this.energy;
+    }
+    
+    @Override
+    public void setToken(int value) {
+    	// TODO Auto-generated method stub
+    	this.Token = value;
+    }
+    
+    @Override
+    public String getToken() {
+    	// TODO Auto-generated method stub
+    	return String.valueOf(this.Token);
+    }
 }

@@ -1,6 +1,8 @@
 package editor.canvas;
 
 import java.util.List;
+import java.util.Map;
+
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -142,4 +144,20 @@ public interface Clip {
     public void setInputPlace(Clip inputPlace);
     
     public void setOutputPlace(Clip outputPlace);
+    
+    public void setName (String value);
+    
+    public String getName ();
+    
+    public void setSensorType(int value);
+    
+    public String getSensorType();
+    
+    public void setEnergy (float value);
+    
+    public float getEnergy ();
+    
+    public void setToken (int value);
+    
+    public String getToken ();
 }

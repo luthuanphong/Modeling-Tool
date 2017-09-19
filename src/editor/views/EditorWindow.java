@@ -1,6 +1,7 @@
 package editor.views;
 
-import java.util.List;
+import java.util.List;import javax.swing.text.AbstractDocument.BranchElement;
+
 import editor.canvas.Board;
 import editor.canvas.Clip;
 import editor.commands.Command;
@@ -43,7 +44,8 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		menuBar = new EditorMenuBar(this);
 		toolBar = new EditorToolBar(this);
 		data = new InitializeData();
-		
+		data.setSensorClip(board.getSensorClip());
+		data.setChannelClip(board.getChannelClip());
 		// -- Mouse Events
 		updateBoard();
 		canvas.setOnMousePressed((e) -> {

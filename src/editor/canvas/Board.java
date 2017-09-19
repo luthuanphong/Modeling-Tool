@@ -2,13 +2,18 @@ package editor.canvas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Board {
 	private List<Clip> clips = new ArrayList<Clip>();
         private List<Clip> placeClips = new ArrayList<Clip>();
         private List<Clip> arcClips = new ArrayList<Clip>();
+        private ObservableList<Clip> sensorClip = FXCollections.observableArrayList();
+        private ObservableList<Clip> channelClip = FXCollections.observableArrayList();
 
 	public List<Clip> getClips() {
 		List<Clip> temp = new ArrayList<>();
@@ -17,22 +22,32 @@ public class Board {
 		return temp;
 	}
         
-        public List<Clip> getPlaceClip(){
-            return placeClips;
-        }
+    public List<Clip> getPlaceClip(){
+    	return placeClips;
+    }
         
-        public List<Clip> getArcClip(){
-            return arcClips;
-        }
+    public List<Clip> getArcClip(){
+        return arcClips;
+    }
+    
+    public ObservableList<Clip> getSensorClip () {
+    	return this.sensorClip;
+    }
+    
+    public ObservableList<Clip> getChannelClip () {
+    	return this.channelClip;
+    }
 
 	public void addClip(Clip toAdd) {
 		clips.add(toAdd);
                 switch(toAdd.getType()){
                     case Place:
                         placeClips.add(toAdd);
+                        sensorClip.add(toAdd);
                         break;
                     case Arc:
                         arcClips.add(toAdd);
+                        channelClip.add(toAdd);
                         break;
                     default:
 			break;
@@ -44,9 +59,11 @@ public class Board {
 		switch (toRemove.getType()) {
 		case Place:
 			placeClips.remove(toRemove);
+			sensorClip.remove(toRemove);
 			break;
 		case Arc:
 			arcClips.remove(toRemove);
+			channelClip.remove(toRemove);
 			break;
 		default:
 			break;
@@ -63,9 +80,11 @@ public class Board {
                     switch(c.getType()){
                         case Place :
                             placeClips.remove(c);
+                            sensorClip.remove(c);
                             break;
                         case Arc:
                             arcClips.remove(c);
+                            channelClip.remove(c);
                             break;
                         default :
                             break;
@@ -75,8 +94,10 @@ public class Board {
 	
 	public void clear() {
 		clips.clear();
-                arcClips.clear();
-                placeClips.clear();
+        arcClips.clear();
+        placeClips.clear();
+        sensorClip.clear();
+        channelClip.clear();
 	}
 
 	public void draw(GraphicsContext ctx) {

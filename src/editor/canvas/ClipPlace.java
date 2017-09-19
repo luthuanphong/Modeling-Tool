@@ -11,12 +11,14 @@ public class ClipPlace extends AbstractClip {
 	private static AtomicInteger uniqueId = new AtomicInteger();
 	//private Place place;
 	private String label = "";
-	private String id = String.valueOf(uniqueId.getAndIncrement());
+	
 	private int token = 0;
+	
 
 	public ClipPlace(Point2D center) {
 		super(center);
-                this.setType(ClipType.Place);
+        this.setType(ClipType.Place);
+        id = String.valueOf(uniqueId.getAndIncrement());
 		//Place place = new Place(id, label, token);
 	}
 
