@@ -198,11 +198,11 @@ public abstract class AbstractClip implements Clip {
     	// TODO Auto-generated method stub
     	switch (this.sensorType) {
 		case 1:
-			return "Source";			
+			return SensorType.SOURCE;			
 		case 2:
-			return "Sink";
+			return SensorType.SINK;
 		case 3:
-			return "Intermediate";
+			return SensorType.INTERMEDIATE;
 		default:
 			return "";
 		}

@@ -46,6 +46,8 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		data = new InitializeData();
 		data.setSensorClip(board.getSensorClip());
 		data.setChannelClip(board.getChannelClip());
+		data.setOriginSensorClip(board.getPlaceClip());
+		data.setOriginChannelClip(board.getChannelClip());
 		// -- Mouse Events
 		updateBoard();
 		canvas.setOnMousePressed((e) -> {

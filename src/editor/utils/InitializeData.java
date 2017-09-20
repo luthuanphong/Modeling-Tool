@@ -6,6 +6,7 @@
 
 package editor.utils;
 
+import java.util.List;
 import java.util.Map;
 
 import editor.canvas.Clip;
@@ -26,6 +27,8 @@ public class InitializeData {
     private String numberOfPackage = "10";
     private ObservableList<Clip> sensorClip;
     private ObservableList<Clip> channelClip;
+    private List<Clip> originSensorClip;
+    private List<Clip> originChannelClip;
     
     public void setMinSensorSendingRate (String value) {
         this.minSensorSendingRate = value;
@@ -63,6 +66,14 @@ public class InitializeData {
     	this.channelClip = value;
     }
     
+    public void setOriginSensorClip (List<Clip> value) {
+    	this.originSensorClip = value;
+    }
+    
+    public void setOriginChannelClip (List<Clip> value) {
+    	this.originChannelClip = value;
+    }
+    
     public String getMinSensorSendingRate () {
         return this.minSensorSendingRate;
     }
@@ -97,5 +108,13 @@ public class InitializeData {
     
     public ObservableList<Clip> getChannelClip () {
     	return this.channelClip;
+    }
+    
+    public List<Clip> getOriginalSensorClip () {
+    	return this.originSensorClip;
+    }
+    
+    public List<Clip> getOriginalChannelClip () {
+    	return this.originChannelClip;
     }
 }

@@ -7,21 +7,26 @@
 package editor.views;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import editor.canvas.Clip;
+import editor.canvas.SensorType;
 import editor.utils.InitializeData;
-import javafx.beans.property.ReadOnlyFloatWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogEvent;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -34,6 +39,7 @@ public class EditorConfig extends Dialog<Object> {
     
     private FXMLLoader uiLoader;
     private InitializeData data;
+    private Clip selectedClip;
     
     @FXML
     private AnchorPane anchorPane;
@@ -63,6 +69,18 @@ public class EditorConfig extends Dialog<Object> {
     private TableColumn<Clip,String> sensorToken;
     @FXML
     private TableColumn<Clip,String> sensorEnergy;
+    @FXML
+    private Label idSensor;
+    @FXML
+    private Label nameSensor;
+    @FXML
+    private ComboBox<String> typeSensor;
+    @FXML
+    private TextField tokenSensor;
+    @FXML
+    private TextField energySensor;
+    @FXML
+    private Button apply;
     /**
      * Dialog constructor used to set up basic information
      * @param data
@@ -88,7 +106,9 @@ public class EditorConfig extends Dialog<Object> {
         this.getDialogPane().setContent(this.uiLoader.getRoot());
         this.show(); 
         this.InitTextContent();
+        this.InitBasicData();
         this.InitTableData();
+        this.initDialogEvent();
     }
     
     /**
@@ -131,6 +151,88 @@ public class EditorConfig extends Dialog<Object> {
 		});
     }
     
+    /**
+     * 
+     */
+    private void initDialogEvent () {
+    	this.sensorTable.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				EditorConfig.this.UpdateSelectContent();
+			}
+		});
+    	
+    	this.typeSensor.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				UpdateUIFromActionOFComboboxTypeSensor();
+			}
+		});
+    	
+    	this.apply.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				ApplyDataFromUItoSensor();
+			}
+		});
+    }
+    
+    private void UpdateSelectContent () {
+    	int index = this.sensorTable.getSelectionModel().getSelectedIndex();
+    	this.selectedClip = data.getOriginalSensorClip().get(index);
+    	this.idSensor.setText(selectedClip.getId());
+    	this.nameSensor.setText(selectedClip.getName());
+    	this.typeSensor.getSelectionModel().select(selectedClip.getSensorType());
+    	
+    	if(selectedClip.getSensorType().equals(SensorType.SOURCE)) {
+    		this.tokenSensor.setText(selectedClip.getToken());
+    	}else {
+    		this.tokenSensor.editableProperty().set(false);
+    	}
+    	
+    	this.energySensor.setText(selectedClip.getEnergy()+"");
+    	
+    }
+    
+    public void UpdateUIFromActionOFComboboxTypeSensor () {
+    	String item = this.typeSensor.getSelectionModel().getSelectedItem();
+    	if(item.equals(SensorType.SOURCE)) {
+    		this.tokenSensor.setEditable(true);
+    	}else {
+    		this.tokenSensor.setEditable(false);
+    	}
+    }
+    
+    public void ApplyDataFromUItoSensor () {
+    	String sensorType = this.typeSensor.getSelectionModel().getSelectedItem();
+    	if(sensorType.equals(SensorType.SOURCE)) {
+    		selectedClip.setSensorType(1);
+    	} else if (sensorType.equals(SensorType.SINK)) {
+    		selectedClip.setSensorType(2);
+    	} else {
+    		selectedClip.setSensorType(3);
+    	}
+    	
+    	try {
+    		int token = Integer.parseInt(this.tokenSensor.getText());
+    		float energy = Float.parseFloat(this.energySensor.getText());
+    		selectedClip.setToken(token);
+    		selectedClip.setEnergy(energy);
+    	}catch (Exception e) {
+			// TODO: handle exception
+		}
+    	this.sensorTable.refresh();
+    }
+    
+    /**
+     * 
+     */
     private void InitTableData () {
     	this.sensorTable.setItems(data.getSensorClip());
     	this.sensorId.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getId()));
@@ -138,6 +240,16 @@ public class EditorConfig extends Dialog<Object> {
     	this.sensorType.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getSensorType()));
     	this.sensorToken.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getToken()));
     	this.sensorEnergy.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getEnergy()+""));
+    	
+    	this.sensorId.setSortable(false);
+    	this.sensorName.setSortable(false);
+    	this.sensorToken.setSortable(false);
+    	this.sensorEnergy.setSortable(false);
+    	this.sensorType.setSortable(false);
+    }
+    
+    private void InitBasicData () {
+    	this.typeSensor.setItems(FXCollections.observableArrayList(SensorType.SOURCE,SensorType.SINK,SensorType.INTERMEDIATE));
     }
     
     /**

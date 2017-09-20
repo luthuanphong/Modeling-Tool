@@ -37,15 +37,26 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="sensorTable" layoutX="8.0" layoutY="76.0" prefHeight="287.0" prefWidth="585.0">
+                        <TableView fx:id="sensorTable" layoutX="50.0" layoutY="110.0" prefHeight="250.0" prefWidth="500.0">
                           <columns>
-                            <TableColumn fx:id="sensorId" prefWidth="120.0" text="Id" />
-                            <TableColumn fx:id="sensorName" prefWidth="120.0" text="Name" />
-                              <TableColumn fx:id="sensorType" prefWidth="120.0" text="Sensor type" />
-                              <TableColumn fx:id="sensorToken" prefWidth="120.0" text="Token" />
-                              <TableColumn fx:id="sensorEnergy" prefWidth="120.0" text="Energy" />
+                            <TableColumn fx:id="sensorId" prefWidth="100.0" text="Id" />
+                            <TableColumn fx:id="sensorName" prefWidth="100.0" text="Name" />
+                              <TableColumn fx:id="sensorType" prefWidth="100.0" text="Sensor type" />
+                              <TableColumn fx:id="sensorToken" prefWidth="100.0" text="Token" />
+                              <TableColumn fx:id="sensorEnergy" prefWidth="100.0" text="Energy" />
                           </columns>
                         </TableView>
+                        <Label layoutX="50.0" layoutY="14.0" text="Id :" />
+                        <Label fx:id="idSensor" layoutX="76.0" layoutY="14.0" />
+                        <Label layoutX="241.0" layoutY="14.0" text="Name :" />
+                        <Label fx:id="nameSensor" layoutX="285.0" layoutY="14.0" />
+                        <Label layoutX="45.0" layoutY="39.0" text="Type :" />
+                        <ComboBox fx:id="typeSensor" layoutX="87.0" layoutY="35.0" prefWidth="150.0" />
+                        <Label layoutX="244.0" layoutY="39.0" text="Token :" />
+                        <TextField fx:id="tokenSensor" layoutX="300.0" layoutY="35.0" />
+                        <Label layoutX="44.0" layoutY="69.0" text="Energy :" />
+                        <TextField fx:id="energySensor" layoutX="88.0" layoutY="65.0" />
+                        <Button fx:id="apply" layoutX="465.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Apply" />
                      </children></AnchorPane>
               </content>
             </Tab>
