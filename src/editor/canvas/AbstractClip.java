@@ -1,9 +1,7 @@
 package editor.canvas;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -19,7 +17,7 @@ public abstract class AbstractClip implements Clip {
     private Clip inputPlace;
     private Clip outputPlace;
     protected String label, id;
-    private int sensorType = 3;
+    protected int sensorType = 3;
     private float energy = 100.0f;
     private int Token = 0;
 

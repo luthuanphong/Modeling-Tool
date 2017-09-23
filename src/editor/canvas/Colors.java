@@ -10,4 +10,6 @@ public class Colors {
 	public static final Color SELECTED = Color.YELLOW;
 	public static final Color POINTING = Color.BLUE;
 	public static final Color NETBORDCOLOR = Color.BLACK;	
+	public static final Color SENSORSOURCE = Color.BLUE;
+	public static final Color SENSORSINK = Color.RED;
 }

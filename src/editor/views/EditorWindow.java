@@ -1,7 +1,6 @@
 package editor.views;
 
-import java.util.List;import javax.swing.text.AbstractDocument.BranchElement;
-
+import java.util.List;
 import editor.canvas.Board;
 import editor.canvas.Clip;
 import editor.commands.Command;

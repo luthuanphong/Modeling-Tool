@@ -21,12 +21,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -39,7 +43,9 @@ public class EditorConfig extends Dialog<Object> {
     
     private FXMLLoader uiLoader;
     private InitializeData data;
-    private Clip selectedClip;
+    private Clip selectedSensorClip;
+    private Clip selectedChannelClip;
+    private EditorWindow editor;
     
     @FXML
     private AnchorPane anchorPane;
@@ -81,11 +87,47 @@ public class EditorConfig extends Dialog<Object> {
     private TextField energySensor;
     @FXML
     private Button apply;
+    @FXML
+    private Label channeId;
+    @FXML
+    private Label channelName;
+    @FXML
+    private ComboBox<Clip> sensorFrom;
+    @FXML
+    private ComboBox<Clip> sensorTo;
+    @FXML
+    private TableView<Clip> channelTable;
+    @FXML
+    private TableColumn<Clip,String> channelIdCol;
+    @FXML
+    private TableColumn<Clip,String> channelNameCol;
+    @FXML
+    private TableColumn<Clip, String> sensorFromCol;
+    @FXML
+    private TableColumn<Clip,String> sensorToCol;
+    @FXML
+    private Button channelApply;
+    
     /**
+     * 
+     */
+    public EditorConfig () {
+        this.initObject();
+        this.initStyle();
+        try {
+            this.LoadUI();
+        } catch (IOException ex) {
+            Logger.getLogger(EditorConfig.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setEvent();
+    }
+    
+    /** 
      * Dialog constructor used to set up basic information
      * @param data
      */
-    public EditorConfig (InitializeData data) {
+    public EditorConfig (InitializeData data,EditorWindow editor) {
+    	this.editor = editor;
     	this.data = data;
         this.initObject();
         this.initStyle();
@@ -98,6 +140,11 @@ public class EditorConfig extends Dialog<Object> {
         
     }
     
+    public void setEditor (EditorWindow editor) {
+    	this.data = editor.getData();
+    	this.editor = editor;
+    }
+    
     /**
      * Show dialog
      */
@@ -105,9 +152,10 @@ public class EditorConfig extends Dialog<Object> {
         //Scene scene = new Scene(this.uiLoader.getRoot());
         this.getDialogPane().setContent(this.uiLoader.getRoot());
         this.show(); 
-        this.InitTextContent();
-        this.InitBasicData();
-        this.InitTableData();
+        this.InitCommonContent();
+        this.InitComboboxData();
+        this.InitSensorTableData();
+        this.InitChannelTableData();
         this.initDialogEvent();
     }
     
@@ -147,61 +195,95 @@ public class EditorConfig extends Dialog<Object> {
 			public void handle(DialogEvent event) {
 				// TODO Auto-generated method stub
 				EditorConfig.this.GetTextContent();
+				EditorConfig.this.editor.updateBoard();
 			}
 		});
     }
     
     /**
-     * 
+     * Initialize user interface event 
      */
     private void initDialogEvent () {
+    	// Initialize sensor table view click event
     	this.sensorTable.setOnMouseClicked(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				EditorConfig.this.UpdateSelectContent();
+				EditorConfig.this.UpdateSelectSensorContent();
 			}
 		});
     	
+    	// Initialize sensor combobox selection event
     	this.typeSensor.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				UpdateUIFromActionOFComboboxTypeSensor();
 			}
 		});
     	
+    	// Sensor apply new information event
     	this.apply.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				ApplyDataFromUItoSensor();
+			}
+		});
+    	
+    	// Initialize channel table view click event
+    	this.channelTable.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				EditorConfig.this.UpdateSelectedChannelContent();
 			}
 		});
     }
     
-    private void UpdateSelectContent () {
+    /**
+     * Show selected sensor content to UI
+     */
+    private void UpdateSelectSensorContent () {
     	int index = this.sensorTable.getSelectionModel().getSelectedIndex();
-    	this.selectedClip = data.getOriginalSensorClip().get(index);
-    	this.idSensor.setText(selectedClip.getId());
-    	this.nameSensor.setText(selectedClip.getName());
-    	this.typeSensor.getSelectionModel().select(selectedClip.getSensorType());
-    	
-    	if(selectedClip.getSensorType().equals(SensorType.SOURCE)) {
-    		this.tokenSensor.setText(selectedClip.getToken());
-    	}else {
-    		this.tokenSensor.editableProperty().set(false);
+    	if (index != -1 ) {
+	    	this.selectedSensorClip = data.getOriginalSensorClip().get(index);
+	    	this.idSensor.setText(selectedSensorClip.getId());
+	    	this.nameSensor.setText(selectedSensorClip.getName());
+	    	this.typeSensor.getSelectionModel().select(selectedSensorClip.getSensorType());
+	    	this.tokenSensor.setText(selectedSensorClip.getToken());
+	    	if(selectedSensorClip.getSensorType().equals(SensorType.SOURCE)) {
+	    		this.tokenSensor.setText(selectedSensorClip.getToken());
+	    	}else {
+	    		this.tokenSensor.editableProperty().set(false);
+	    	}
+	    	
+	    	this.energySensor.setText(selectedSensorClip.getEnergy()+"");
     	}
-    	
-    	this.energySensor.setText(selectedClip.getEnergy()+"");
-    	
     }
     
-    public void UpdateUIFromActionOFComboboxTypeSensor () {
+    /**
+     * Show selected channel content to Ui
+     */
+    private void UpdateSelectedChannelContent () {
+    	int index = this.channelTable.getSelectionModel().getSelectedIndex();
+    	if (index != -1 ) {
+    		this.selectedChannelClip = data.getOriginalChannelClip().get(index);
+    		this.channeId.setText(selectedChannelClip.getId());
+    		this.channelName.setText(selectedChannelClip.getName());
+    	}
+    }
+    
+    /**
+     * Update ui for text field if sensor type is source
+     * Sensor type is source open the text field
+     * Sink or intermediate disable the text field
+     */
+    private void UpdateUIFromActionOFComboboxTypeSensor () {
     	String item = this.typeSensor.getSelectionModel().getSelectedItem();
+    	if (item == null) {
+    		return ;
+    	}
     	if(item.equals(SensorType.SOURCE)) {
     		this.tokenSensor.setEditable(true);
     	}else {
@@ -209,21 +291,24 @@ public class EditorConfig extends Dialog<Object> {
     	}
     }
     
-    public void ApplyDataFromUItoSensor () {
+    /**
+     * Apply sensor information change and show it to UI
+     */
+    private void ApplyDataFromUItoSensor () {
     	String sensorType = this.typeSensor.getSelectionModel().getSelectedItem();
     	if(sensorType.equals(SensorType.SOURCE)) {
-    		selectedClip.setSensorType(1);
+    		selectedSensorClip.setSensorType(1);
     	} else if (sensorType.equals(SensorType.SINK)) {
-    		selectedClip.setSensorType(2);
+    		selectedSensorClip.setSensorType(2);
     	} else {
-    		selectedClip.setSensorType(3);
+    		selectedSensorClip.setSensorType(3);
     	}
     	
     	try {
     		int token = Integer.parseInt(this.tokenSensor.getText());
     		float energy = Float.parseFloat(this.energySensor.getText());
-    		selectedClip.setToken(token);
-    		selectedClip.setEnergy(energy);
+    		selectedSensorClip.setToken(token);
+    		selectedSensorClip.setEnergy(energy);
     	}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -231,9 +316,9 @@ public class EditorConfig extends Dialog<Object> {
     }
     
     /**
-     * 
+     * Initialize sensor table data
      */
-    private void InitTableData () {
+    private void InitSensorTableData () {
     	this.sensorTable.setItems(data.getSensorClip());
     	this.sensorId.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getId()));
     	this.sensorName.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getName()));
@@ -248,14 +333,64 @@ public class EditorConfig extends Dialog<Object> {
     	this.sensorType.setSortable(false);
     }
     
-    private void InitBasicData () {
+    /**
+     * Initialize channel table data
+     */
+    private void InitChannelTableData () {
+    	
+    	this.channelTable.setItems(data.getChannelClip());
+    	this.channelIdCol.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getId()));
+    	this.channelNameCol.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getName()));
+    	this.sensorFromCol.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getOutputPlace().getId()));
+    	this.sensorToCol.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getInputPlace().getId()));
+    	
+    	this.channelIdCol.setSortable(false);
+    	this.channelNameCol.setSortable(false);
+    	this.sensorFromCol.setSortable(false);
+    	this.sensorToCol.setSortable(false);
+    }
+    
+    private void InitComboboxData () {
+    	//Init sensor type combobox
     	this.typeSensor.setItems(FXCollections.observableArrayList(SensorType.SOURCE,SensorType.SINK,SensorType.INTERMEDIATE));
+    	
+    	this.sensorFrom.setItems(data.getSensorClip());
+    	this.sensorFrom.setConverter(new StringConverter<Clip>() {
+			
+			@Override
+			public String toString(Clip object) {
+				// TODO Auto-generated method stub
+				return object.getId();
+			}
+			
+			@Override
+			public Clip fromString(String string) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
+    	
+    	this.sensorTo.setItems(data.getSensorClip());
+    	this.sensorTo.setConverter(new StringConverter<Clip>() {
+			
+			@Override
+			public String toString(Clip object) {
+				// TODO Auto-generated method stub
+				return object.getId();
+			}
+			
+			@Override
+			public Clip fromString(String string) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
     }
     
     /**
-     * Set up default content for text field
+     * Set up default content for text field . Example is sensor sending rate , processing rate sensor energy
      */
-    private void InitTextContent () {
+    private void InitCommonContent () {
     	this.minSensorSendingRate.setText(this.data.getMinSensorSendingRate());
     	this.minSensorProcessingRate.setText(this.data.getMinSensorProcessingRate());
     	this.minChannelSendingRate.setText(this.data.getMinChannelSendingRate());

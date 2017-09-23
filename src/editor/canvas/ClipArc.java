@@ -7,19 +7,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ClipArc extends AbstractClip {
 	
 	private static AtomicInteger uniqueId = new AtomicInteger();
-	private String label = "";
-	private String id = String.valueOf(uniqueId.getAndIncrement());
-	private int token = 0;
 	
 	public ClipArc(Point2D start, Point2D end) {
 		super(start, end);
-                this.setType(ClipType.Arc);
+        this.setType(ClipType.Arc);
+        this.id = String.valueOf(uniqueId.getAndIncrement());
 	}
 	
 	@Override
 	public void decrementId() {
 		// TODO Auto-generated method stub
-		id = String.valueOf(uniqueId.decrementAndGet());
+		this.id = String.valueOf(uniqueId.decrementAndGet());
 	}
 
 	@Override

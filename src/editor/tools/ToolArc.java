@@ -34,7 +34,9 @@ public class ToolArc implements Tool {
                         selectClip.getCenterY()));
                 inputedClip = selectClip;
                 ClipArc clip = new ClipArc(arcPos.get(0), arcPos.get(1));
+                //set channel input to sensor
                 clip.setInputPlace(inputedClip);
+                //set channel output from sensor
                 clip.setOutputPlace(outputedClip);
                 arc.add(clip);
                 outputedClip.getOutArc().add(clip);

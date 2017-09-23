@@ -60,6 +60,31 @@
                      </children></AnchorPane>
               </content>
             </Tab>
+            <Tab text="Channel">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="channelTable" layoutX="50.0" layoutY="100.0" prefHeight="250.0" prefWidth="500.0">
+                           <columns>
+                              <TableColumn fx:id="channelIdCol" prefWidth="125.0" text="Id" />
+                              <TableColumn fx:id="channelNameCol" prefWidth="125.0" text="Name" />
+                              <TableColumn fx:id="sensorFromCol" prefWidth="125.0" text="From" />
+                              <TableColumn fx:id="sensorToCol" prefWidth="125.0" text="To" />
+                           </columns>
+                        </TableView>
+                        <Label layoutX="50.0" layoutY="14.0" text="Id :" />
+                        <Label fx:id="channeId" layoutX="73.0" layoutY="14.0" />
+                        <Label layoutX="174.0" layoutY="14.0" text="Name :" />
+                        <Label fx:id="channelName" layoutX="218.0" layoutY="14.0" />
+                        <Label layoutX="45.0" layoutY="54.0" text="From :" />
+                        <ComboBox fx:id="sensorFrom" layoutX="87.0" layoutY="50.0" prefWidth="150.0" />
+                        <Label layoutX="246.0" layoutY="54.0" text="To :" />
+                        <ComboBox fx:id="sensorTo" layoutX="273.0" layoutY="50.0" prefWidth="150.0" />
+                        <Button fx:id="channelApply" layoutX="498.0" layoutY="19.0" mnemonicParsing="false" text="Apply" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
          </tabs>
       </TabPane>
    </children>

@@ -8,18 +8,12 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class ClipPlace extends AbstractClip {
 	
-	private static AtomicInteger uniqueId = new AtomicInteger();
-	//private Place place;
-	private String label = "";
-	
-	private int token = 0;
-	
+	private static AtomicInteger uniqueId = new AtomicInteger();	
 
 	public ClipPlace(Point2D center) {
 		super(center);
         this.setType(ClipType.Place);
         id = String.valueOf(uniqueId.getAndIncrement());
-		//Place place = new Place(id, label, token);
 	}
 
 	@Override
@@ -66,7 +60,13 @@ public class ClipPlace extends AbstractClip {
 	}
 
 	private void drawBackground(GraphicsContext ctx) {
-		ctx.setFill(Colors.NETCOLOR);
+		if(this.getSensorType().equals(SensorType.SOURCE)) {
+			ctx.setFill(Colors.SENSORSOURCE);
+		} else if (this.getSensorType().equals(SensorType.SINK)) {
+			ctx.setFill(Colors.SENSORSINK);
+		} else {
+			ctx.setFill(Colors.NETCOLOR);
+		}
 		ctx.fillOval(getStart().getX(), getStart().getY(), getWidth(), getHeight());
 	}
 
