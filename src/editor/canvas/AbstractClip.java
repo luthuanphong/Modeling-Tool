@@ -165,12 +165,14 @@ public abstract class AbstractClip implements Clip {
     public void setInputPlace(Clip inputPlace) {
     	// TODO Auto-generated method stub
     	this.inputPlace = inputPlace;
+        this.setEnd(this.inputPlace.getCenterX(), this.inputPlace.getCenterY());
     }
     
     @Override
     public void setOutputPlace(Clip outputPlace) {
     	// TODO Auto-generated method stub
     	this.outputPlace = outputPlace;
+        this.setStart(this.outputPlace.getCenterX(), this.outputPlace.getCenterY());
     }
     
     @Override
@@ -230,3 +232,4 @@ public abstract class AbstractClip implements Clip {
     	return String.valueOf(this.Token);
     }
 }
+
