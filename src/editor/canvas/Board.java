@@ -2,18 +2,16 @@ package editor.canvas;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Board {
-	private List<Clip> clips = new ArrayList<Clip>();
-        private List<Clip> placeClips = new ArrayList<Clip>();
-        private List<Clip> arcClips = new ArrayList<Clip>();
-        private ObservableList<Clip> sensorClip = FXCollections.observableArrayList();
-        private ObservableList<Clip> channelClip = FXCollections.observableArrayList();
+	private final List<Clip> clips = new ArrayList<>();
+        private final List<Clip> placeClips = new ArrayList<>();
+        private final List<Clip> arcClips = new ArrayList<>();
+        private final ObservableList<Clip> sensorClip = FXCollections.observableArrayList();
+        private final ObservableList<Clip> channelClip = FXCollections.observableArrayList();
 
 	public List<Clip> getClips() {
 		List<Clip> temp = new ArrayList<>();
