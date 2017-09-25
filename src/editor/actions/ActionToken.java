@@ -1,6 +1,6 @@
 package editor.actions;
 
-import editor.tools.ToolToken;
+import editor.views.EditorRun;
 import editor.views.EditorWindow;
 import javafx.event.ActionEvent;
 
@@ -13,6 +13,7 @@ public class ActionToken implements Action {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		editor.setTool(new ToolToken());
+		//editor.setTool(new ToolToken());
+		new EditorRun(this.editor.getData()).Show();
 	}
 }

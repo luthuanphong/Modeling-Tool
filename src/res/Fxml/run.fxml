@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <RadioButton fx:id="unicast" layoutX="14.0" layoutY="29.0" mnemonicParsing="false" text="Unicast mode" />
+      <RadioButton fx:id="broadcast" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" text="Broadcast mode" />
+      <Button fx:id="run" layoutX="170.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Run" />
+   </children>
+</AnchorPane>

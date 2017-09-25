@@ -27,8 +27,14 @@
                         <Label layoutX="273.0" layoutY="145.0" text="Max :" />
                         <TextField fx:id="minChannelSendingRate" layoutX="45.0" layoutY="141.0" />
                         <TextField fx:id="maxChannelSendingRate" layoutX="307.0" layoutY="141.0" />
-                        <Label layoutX="14.0" layoutY="190.0" text="Number  of package :" />
-                        <TextField fx:id="numberOfPackage" layoutX="134.0" layoutY="186.0" />
+                        <Label layoutX="13.0" layoutY="190.0" text="Number  of package :" />
+                        <TextField fx:id="numberOfPackage" layoutX="158.0" layoutY="186.0" />
+                        <Label layoutX="14.0" layoutY="219.0" text="Sensor max buffer size :" />
+                        <Label layoutX="13.0" layoutY="249.0" text="Sensor max queue size :" />
+                        <Label layoutX="10.0" layoutY="279.0" text="Channel max buffer size :" />
+                        <TextField fx:id="sensorMaxbufferSize" layoutX="158.0" layoutY="215.0" />
+                        <TextField fx:id="sensorMaxQueueSize" layoutX="158.0" layoutY="245.0" />
+                        <TextField fx:id="channelMaxBufferSize" layoutX="158.0" layoutY="275.0" />
                      </children>
                   </AnchorPane>
               </content>

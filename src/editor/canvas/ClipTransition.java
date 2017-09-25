@@ -9,14 +9,11 @@ import javafx.scene.canvas.GraphicsContext;
 public class ClipTransition extends AbstractClip {
 
 	private static AtomicInteger uniqueId = new AtomicInteger();
-	//private Transition transition;
-	private String label = "";
-	private String id = String.valueOf(uniqueId.getAndIncrement());
 
 	public ClipTransition(Point2D center) {
 		super(center);
-                this.setType(ClipType.Transition);
-		//transition = new Transition(id, label);
+        this.setType(ClipType.Transition);
+        this.id = String.valueOf(uniqueId.getAndIncrement());
 	}
 
 	@Override

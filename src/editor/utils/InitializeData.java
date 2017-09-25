@@ -6,10 +6,15 @@
 
 package editor.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import Constants.TopologyConstants;
+import Kwsn.Link;
+import Kwsn.Sensor;
 import editor.canvas.Clip;
+import editor.canvas.SensorType;
 import javafx.collections.ObservableList;
 
 /**
@@ -24,6 +29,9 @@ public class InitializeData {
     private String maxSensorProcessingRate = "5";
     private String minChannelSendingRate = "1";
     private String maxChannelSendingRate = "5";
+    private String sensorMaxBufferSize = "5";
+    private String sensorMaxQueueSize = "5";
+    private String channelMaxBufferSize = "5";
     private String numberOfPackage = "10";
     private ObservableList<Clip> sensorClip;
     private ObservableList<Clip> channelClip;
@@ -116,5 +124,87 @@ public class InitializeData {
     
     public List<Clip> getOriginalChannelClip () {
     	return this.originChannelClip;
+    }
+    
+    public HashMap<String,Object> getTopologyData () {
+    	HashMap<String, Object> map = new HashMap<>();
+    	//sensor
+    	map.put(TopologyConstants.SENSORS_MAX_BUFFER_SIZE_KEY, this.getSensorMaxBufferSize());
+    	map.put(TopologyConstants.SENSORS_MAX_QUEUE_SIZE_KEY, this.getSensorMaxQueueSize());
+    	map.put(TopologyConstants.SENSORS_MAX_SENDING_RATE_KEY,this.maxSensorSendingRate);
+    	map.put(TopologyConstants.SENSORS_MAX_PROCESSING_RATE_KEY, this.maxSensorProcessingRate);
+    	map.put(TopologyConstants.SENSORS_MIN_SENDING_RATE_KEY, this.minSensorSendingRate);
+    	map.put(TopologyConstants.SENSORS_MIN_PROCESSING_RATE_KEY,this.minSensorProcessingRate);
+    	map.put(TopologyConstants.SENSORS_LIST_KEY, this.getSensorFromClip());
+    	
+    	map.put(TopologyConstants.CHANEL_MAX_BUFFER_SIZE_KEY, this.getChannelMaxBufferSize());
+    	map.put(TopologyConstants.CHANNEL_MAX_SENDING_RATE_KEY, this.maxChannelSendingRate);
+    	map.put(TopologyConstants.CHANNEL_MIN_SENDING_RATE_KEY, this.minChannelSendingRate);
+    	map.put(TopologyConstants.CHANNEL_LIST_KEY, this.getChannelFromClip());
+    	
+    	map.put(TopologyConstants.NUMBER_OF_PACKAGE, this.numberOfPackage);
+    	//Energy
+    	return map;
+    }
+
+	public String getSensorMaxBufferSize() {
+		return sensorMaxBufferSize;
+	}
+
+	public void setSensorMaxBufferSize(String sensorMaxBufferSize) {
+		this.sensorMaxBufferSize = sensorMaxBufferSize;
+	}
+
+	public String getSensorMaxQueueSize() {
+		return sensorMaxQueueSize;
+	}
+
+	public void setSensorMaxQueueSize(String sensorMaxQueueSize) {
+		this.sensorMaxQueueSize = sensorMaxQueueSize;
+	}
+
+	public String getChannelMaxBufferSize() {
+		return channelMaxBufferSize;
+	}
+
+	public void setChannelMaxBufferSize(String channelMaxBufferSize) {
+		this.channelMaxBufferSize = channelMaxBufferSize;
+	}
+	
+    private List<Sensor> getSensorFromClip () {
+    	List<Sensor> list = new ArrayList<>();
+    	for(Clip c : this.originSensorClip) {
+    		Sensor s = new Sensor();
+    		s.Id = c.getId();
+    		s.Name = c.getName();
+    		s.energy = c.getEnergy();
+    		s.token = c.getToken();
+    		switch (c.getSensorType()) {
+			case SensorType.SOURCE:
+				s.Type = 1;
+				break;
+			case SensorType.SINK:
+				s.Type = 2;
+				break;
+			case SensorType.INTERMEDIATE:
+				s.Type = 3;
+				break;
+			default:
+				break;
+			}
+    		list.add(s);
+    	}
+    	return list;
+    }
+    
+    private List<Link> getChannelFromClip () {
+    	List<Link> list = new ArrayList<>();
+    	for(Clip c : this.originChannelClip) {
+    		Link l = new Link();
+    		l.id = c.getId();
+    		l.From = c.getOutputPlace().getId();
+    		l.To = c.getInputPlace().getId();
+    	}
+     	return list;
     }
 }

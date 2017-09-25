@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 /**
  *
@@ -60,6 +61,12 @@ public class EditorConfig extends Dialog<Object> {
     private TextField maxChannelSendingRate;
     @FXML
     private TextField numberOfPackage;
+    @FXML
+    private TextField sensorMaxbufferSize;
+    @FXML
+    private TextField sensorMaxQueueSize;
+    @FXML
+    private TextField channelMaxBufferSize;
     @FXML
     private TableView<Clip> sensorTable;
     @FXML
@@ -418,6 +425,9 @@ public class EditorConfig extends Dialog<Object> {
     	this.maxSensorProcessingRate.setText(this.data.getMaxSensorProcessingRate());
     	this.maxChannelSendingRate.setText(this.data.getMaxChannelSendingRate());
     	this.numberOfPackage.setText(this.data.getNumberOfPackage());
+    	this.sensorMaxbufferSize.setText(this.data.getSensorMaxBufferSize());
+    	this.sensorMaxQueueSize.setText(this.data.getSensorMaxQueueSize());
+    	this.channelMaxBufferSize.setText(this.data.getChannelMaxBufferSize());
     }
     
     /**
@@ -431,5 +441,31 @@ public class EditorConfig extends Dialog<Object> {
     	this.data.setMaxSensorProcessingRate(this.maxSensorProcessingRate.getText());
     	this.data.setMaxChannelSendingRate(this.maxChannelSendingRate.getText());
     	this.data.setNumberOfPackage(this.numberOfPackage.getText());
+    	this.data.setSensorMaxBufferSize(this.sensorMaxbufferSize.getText());
+    	this.data.setSensorMaxQueueSize(this.sensorMaxQueueSize.getText());
+    	this.data.setChannelMaxBufferSize(this.channelMaxBufferSize.getText());
     }
+    
+    /* Numeric Validation Limit the  characters to maxLengh AND to ONLY DigitS *************************************/
+    public EventHandler<KeyEvent> numeric_Validation(final Integer max_Lengh) {
+        return new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent e) {
+                TextField txt_TextField = (TextField) e.getSource();                
+                if (txt_TextField.getText().length() >= max_Lengh) {                    
+                    e.consume();
+                }
+                if(e.getCharacter().matches("[0-9.]")){ 
+                    if(txt_TextField.getText().contains(".") && e.getCharacter().matches("[.]")){
+                        e.consume();
+                    }else if(txt_TextField.getText().length() == 0 && e.getCharacter().matches("[.]")){
+                        e.consume(); 
+                    }
+                }else{
+                    e.consume();
+                }
+            }
+        };
+    }    
+    
 }
