@@ -1,8 +1,6 @@
 package editor.canvas;
 
 import java.util.List;
-import java.util.Map;
-
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
