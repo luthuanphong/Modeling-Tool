@@ -21,7 +21,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -29,8 +28,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -239,6 +236,13 @@ public class EditorConfig extends Dialog<Object> {
 				EditorConfig.this.UpdateSelectedChannelContent();
 			}
 		});
+        this.channelApply.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                        EditorConfig.this.ApplyDataFromUIToChannel();
+                }
+            });
     }
     
     /**
@@ -263,6 +267,18 @@ public class EditorConfig extends Dialog<Object> {
     }
     
     /**
+     * 
+     */
+    private void ApplyDataFromUIToChannel () {
+        
+        Clip outputPlace = this.sensorFrom.getSelectionModel().getSelectedItem();
+        Clip inputPlace = this.sensorTo.getSelectionModel().getSelectedItem();
+        this.selectedChannelClip.setOutputPlace(outputPlace);
+        this.selectedChannelClip.setInputPlace(inputPlace);
+        this.channelTable.refresh();
+    }
+    
+    /**
      * Show selected channel content to Ui
      */
     private void UpdateSelectedChannelContent () {
@@ -271,6 +287,10 @@ public class EditorConfig extends Dialog<Object> {
     		this.selectedChannelClip = data.getOriginalChannelClip().get(index);
     		this.channeId.setText(selectedChannelClip.getId());
     		this.channelName.setText(selectedChannelClip.getName());
+                this.sensorFrom.getSelectionModel().select(
+                        this.selectedChannelClip.getOutputPlace());
+                this.sensorTo.getSelectionModel().select(
+                        this.selectedChannelClip.getInputPlace());
     	}
     }
     
