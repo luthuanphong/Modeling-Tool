@@ -174,7 +174,7 @@ public class EditorConfig extends Dialog<Object> {
      * Initialize dialog style
      */
     private void initStyle () {
-        this.setTitle("Config");
+        this.setTitle(EditorWindow.APP_NAME+" - Config");
     }
     
     /**

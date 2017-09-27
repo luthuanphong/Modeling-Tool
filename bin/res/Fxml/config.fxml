@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Common ">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Sensor sending rate" />
+                        <Label layoutX="14.0" layoutY="39.0" text="Min :" />
+                        <Label layoutX="272.0" layoutY="39.0" text="Max :" />
+                        <TextField fx:id="minSensorSendingRate" layoutX="45.0" layoutY="35.0" />
+                        <TextField fx:id="maxSensorSendingRate" layoutX="307.0" layoutY="35.0" />
+                        <Label layoutX="14.0" layoutY="66.0" text="Sensor processing rate" />
+                        <Label layoutX="14.0" layoutY="90.0" text="Min :" />
+                        <Label layoutX="272.0" layoutY="90.0" text="Max :" />
+                        <TextField fx:id="minSensorProcessingRate" layoutX="45.0" layoutY="86.0" />
+                        <TextField fx:id="maxSensorProcessingRate" layoutX="307.0" layoutY="86.0" />
+                        <Label layoutX="14.0" layoutY="121.0" text="Channel sending rate" />
+                        <Label layoutX="14.0" layoutY="145.0" text="Min :" />
+                        <Label layoutX="273.0" layoutY="145.0" text="Max :" />
+                        <TextField fx:id="minChannelSendingRate" layoutX="45.0" layoutY="141.0" />
+                        <TextField fx:id="maxChannelSendingRate" layoutX="307.0" layoutY="141.0" />
+                        <Label layoutX="13.0" layoutY="190.0" text="Number  of package :" />
+                        <TextField fx:id="numberOfPackage" layoutX="158.0" layoutY="186.0" />
+                        <Label layoutX="14.0" layoutY="219.0" text="Sensor max buffer size :" />
+                        <Label layoutX="13.0" layoutY="249.0" text="Sensor max queue size :" />
+                        <Label layoutX="10.0" layoutY="279.0" text="Channel max buffer size :" />
+                        <TextField fx:id="sensorMaxbufferSize" layoutX="158.0" layoutY="215.0" />
+                        <TextField fx:id="sensorMaxQueueSize" layoutX="158.0" layoutY="245.0" />
+                        <TextField fx:id="channelMaxBufferSize" layoutX="158.0" layoutY="275.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Sensor">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="sensorTable" layoutX="50.0" layoutY="110.0" prefHeight="250.0" prefWidth="500.0">
+                          <columns>
+                            <TableColumn fx:id="sensorId" prefWidth="100.0" text="Id" />
+                            <TableColumn fx:id="sensorName" prefWidth="100.0" text="Name" />
+                              <TableColumn fx:id="sensorType" prefWidth="100.0" text="Sensor type" />
+                              <TableColumn fx:id="sensorToken" prefWidth="100.0" text="Token" />
+                              <TableColumn fx:id="sensorEnergy" prefWidth="100.0" text="Energy" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="50.0" layoutY="14.0" text="Id :" />
+                        <Label fx:id="idSensor" layoutX="76.0" layoutY="14.0" />
+                        <Label layoutX="241.0" layoutY="14.0" text="Name :" />
+                        <Label fx:id="nameSensor" layoutX="285.0" layoutY="14.0" />
+                        <Label layoutX="45.0" layoutY="39.0" text="Type :" />
+                        <ComboBox fx:id="typeSensor" layoutX="87.0" layoutY="35.0" prefWidth="150.0" />
+                        <Label layoutX="244.0" layoutY="39.0" text="Token :" />
+                        <TextField fx:id="tokenSensor" layoutX="300.0" layoutY="35.0" />
+                        <Label layoutX="44.0" layoutY="69.0" text="Energy :" />
+                        <TextField fx:id="energySensor" layoutX="88.0" layoutY="65.0" />
+                        <Button fx:id="apply" layoutX="465.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Apply" />
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Channel">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="channelTable" layoutX="50.0" layoutY="100.0" prefHeight="250.0" prefWidth="500.0">
+                           <columns>
+                              <TableColumn fx:id="channelIdCol" prefWidth="125.0" text="Id" />
+                              <TableColumn fx:id="channelNameCol" prefWidth="125.0" text="Name" />
+                              <TableColumn fx:id="sensorFromCol" prefWidth="125.0" text="From" />
+                              <TableColumn fx:id="sensorToCol" prefWidth="125.0" text="To" />
+                           </columns>
+                        </TableView>
+                        <Label layoutX="50.0" layoutY="14.0" text="Id :" />
+                        <Label fx:id="channeId" layoutX="73.0" layoutY="14.0" />
+                        <Label layoutX="174.0" layoutY="14.0" text="Name :" />
+                        <Label fx:id="channelName" layoutX="218.0" layoutY="14.0" />
+                        <Label layoutX="45.0" layoutY="54.0" text="From :" />
+                        <ComboBox fx:id="sensorFrom" layoutX="87.0" layoutY="50.0" prefWidth="150.0" />
+                        <Label layoutX="246.0" layoutY="54.0" text="To :" />
+                        <ComboBox fx:id="sensorTo" layoutX="273.0" layoutY="50.0" prefWidth="150.0" />
+                        <Button fx:id="channelApply" layoutX="498.0" layoutY="19.0" mnemonicParsing="false" text="Apply" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

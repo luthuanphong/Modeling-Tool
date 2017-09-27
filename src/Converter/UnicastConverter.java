@@ -96,7 +96,7 @@ public class UnicastConverter extends Converter {
         try {
             JAXBContext context = JAXBContext.newInstance(Pnml.class);
             Marshaller marshaller = context.createMarshaller();
-            marshaller.marshal(pnml,new File(folderPath+"temp.pnml"));
+            marshaller.marshal(pnml,new File(folderPath,"temp.pnml"));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
@@ -106,7 +106,7 @@ public class UnicastConverter extends Converter {
     public void outputProcessFile(String folderPath) {
 
         try {
-            FileWriter writer = new FileWriter(folderPath+"temp.txt");
+            FileWriter writer = new FileWriter(new File( folderPath,"temp.txt"));
             for (Variable v : variables) {
                 writer.write(v.toString());
                 writer.write(System.lineSeparator());
@@ -124,7 +124,7 @@ public class UnicastConverter extends Converter {
     @Override
     public void outputMinimizeProcessFile(String folderPath) {
         try {
-            FileWriter writer = new FileWriter(folderPath+"temp_minimize.txt");
+            FileWriter writer = new FileWriter(new File(folderPath,"temp_minimize.txt"));
             for (Variable v : variables) {
                 writer.write(v.toMinimizeString());
                 writer.write(System.lineSeparator());

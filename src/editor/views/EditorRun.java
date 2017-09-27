@@ -10,9 +10,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import Converter.Converter;
 import Converter.UnicastConverter;
 import Converter.BroadcastConverter;
@@ -34,8 +37,10 @@ public class EditorRun extends Dialog<Object> {
 	
 	private Converter converter;
 	
-	public EditorRun (InitializeData data) {
-		this.data = data;
+	private Window window;
+	
+	public EditorRun (EditorWindow editor) {
+		this.data = editor.getData();
 		load = new FXMLLoader();
 		load.setLocation(getClass().getResource("/res/Fxml/run.fxml"));
 		load.setRoot(root);
@@ -46,8 +51,12 @@ public class EditorRun extends Dialog<Object> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.setWidth(300);
+		this.setHeight(100);
+		this.window = this.getDialogPane().getScene().getWindow();
 		this.buttonGroup = new ToggleGroup();
 		this.initEvent();
+		this.setTitle(EditorWindow.APP_NAME+" - Analyze");
 	}
 	
 	public void Show() {
@@ -67,17 +76,30 @@ public class EditorRun extends Dialog<Object> {
 				EditorRun.this.Run();
 			}
 		});
-		this.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+		this.window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				// TODO Auto-generated method stub
+				EditorRun.this.window.hide();
+			}
+		});
 	}
 	
 	private void Run() {
+		String baseDirectoryPath = new java.io.File(".").getAbsolutePath();
 		if(this.unicast.isSelected()) {
 			this.converter = new UnicastConverter(this.data.getTopologyData());
 		} else {
 			this.converter = new BroadcastConverter(this.data.getTopologyData());
 		}
-		this.converter.outputPnmlFile("C:\\Users\\FredLu\\Desktop\\");
-		this.converter.outputProcessFile("C:\\Users\\FredLu\\Desktop\\");
-		this.converter.outputMinimizeProcessFile("C:\\Users\\FredLu\\Desktop\\");
+		java.io.File tempFolderPath = new java.io.File(baseDirectoryPath,"temp");
+		if (!tempFolderPath.exists()) {
+			tempFolderPath.mkdirs();
+		}
+		this.converter.outputPnmlFile(tempFolderPath.getPath());
+		this.converter.outputProcessFile(tempFolderPath.getPath());
+		this.converter.outputMinimizeProcessFile(tempFolderPath.getPath());
+		
 	}
 }

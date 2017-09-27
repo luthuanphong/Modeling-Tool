@@ -15,11 +15,13 @@ import editor.utils.Selection;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class EditorWindow extends VBox implements EditorInterface, ClipboardListener {
 
+	
 	private Board board;
 	private Canvas canvas;
 	private Selection selection;
@@ -29,12 +31,16 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 	private EditorToolBar toolBar;
 	private GraphicsContext ctx;
 	private InitializeData data;
+	private ScrollPane scrollBar;
+	private Stage stage;
+	public static final String APP_NAME = "Modeling Tool";
 
 	public EditorWindow(Stage stage) {
 		// -- Setup
+		this.stage = stage;
 		board = new Board();
 		selection = new Selection();
-		canvas = new Canvas(1024, 768);
+		canvas = new Canvas(6000, 6000);
 		tool = new ToolSelect();
 		ctx = canvas.getGraphicsContext2D();
 		Clipboard.getInstance().addListener(this);
@@ -42,6 +48,11 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		
 		menuBar = new EditorMenuBar(this);
 		toolBar = new EditorToolBar(this);
+		scrollBar = new ScrollPane(canvas);
+		scrollBar.setPrefSize(1024, 768);
+		scrollBar.setMaxSize(5000, 5000);
+		scrollBar.setFitToHeight(false);
+		scrollBar.setFitToWidth(false);
 		data = new InitializeData();
 		data.setSensorClip(board.getSensorClip());
 		data.setChannelClip(board.getChannelClip());
@@ -74,11 +85,11 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		});
 
 		// -- Stage
-		VBox editor = new VBox(menuBar, toolBar, canvas);
+		VBox editor = new VBox(menuBar, toolBar, scrollBar);
 
 		Scene scene = new Scene(editor);
         stage.resizableProperty().setValue(Boolean.FALSE);
-		stage.setTitle("Petrinet Framework Editor");
+		stage.setTitle(APP_NAME);
 		stage.setScene(scene);
 		stage.show();
 
@@ -127,5 +138,9 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
     
     public InitializeData getData () {
     	return this.data;
+    }
+    
+    public Stage getStage () {
+    	return this.stage;
     }
 }

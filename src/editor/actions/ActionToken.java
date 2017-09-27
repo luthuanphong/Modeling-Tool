@@ -14,6 +14,6 @@ public class ActionToken implements Action {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//editor.setTool(new ToolToken());
-		new EditorRun(this.editor.getData()).Show();
+		new EditorRun(this.editor).Show();
 	}
 }
