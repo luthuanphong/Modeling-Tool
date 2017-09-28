@@ -157,4 +157,15 @@ public abstract class Converter {
         return (HashMap<String , String>)
                 this.topologyData.getOrDefault(TopologyConstants.ENERGY_RULES_LIST_KEY,null);
     }
+    
+    /**
+     * Convert data to pnml data
+     * @param folderPath folder used to store file
+     */
+    public void Convert (String folderPath) {
+    	this.outputPnmlFile(folderPath);
+    	this.outputProcessFile(folderPath);
+    	this.outputMinimizeProcessFile(folderPath);
+    }
+    
 }

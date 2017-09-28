@@ -2,17 +2,22 @@ package editor.actions;
 
 import editor.views.EditorWindow;
 import javafx.event.ActionEvent;
-import javafx.stage.Stage;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class ActionImport implements Action {
-private EditorWindow editor;
+	private EditorWindow editor;
+	private FileChooser chooser;
 	
 	public ActionImport(EditorWindow editor) {
 		this.editor = editor;
+		this.chooser = new FileChooser();
+		this.chooser.getExtensionFilters().add(new ExtensionFilter("Kwsn files", "*.kwsn"));
+		this.chooser.getExtensionFilters().add(new ExtensionFilter("Topology files", "*.topo"));
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new EditorWindow(new Stage());
+		this.chooser.showOpenDialog(this.editor.getStage());
 	}
 }

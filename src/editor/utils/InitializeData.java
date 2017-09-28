@@ -171,6 +171,9 @@ public class InitializeData {
 		this.channelMaxBufferSize = channelMaxBufferSize;
 	}
 	
+	/**
+	 * Get sensor from Clip
+	 */
     private List<Sensor> getSensorFromClip () {
     	List<Sensor> list = new ArrayList<>();
     	for(Clip c : this.originSensorClip) {
@@ -197,6 +200,10 @@ public class InitializeData {
     	return list;
     }
     
+    /**
+     * Get Channel from clip 
+     * @return
+     */
     private List<Link> getChannelFromClip () {
     	List<Link> list = new ArrayList<>();
     	for(Clip c : this.originChannelClip) {

@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -250,6 +251,18 @@ public class EditorConfig extends Dialog<Object> {
                         EditorConfig.this.ApplyDataFromUIToChannel();
                 }
             });
+        this.minSensorSendingRate.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.minSensorProcessingRate.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.minChannelSendingRate.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.maxSensorSendingRate.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.maxSensorProcessingRate.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.maxChannelSendingRate.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.numberOfPackage.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.sensorMaxbufferSize.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.sensorMaxQueueSize.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.channelMaxBufferSize.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.tokenSensor.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
+    	this.energySensor.addEventHandler(KeyEvent.KEY_TYPED, numeric_Validation(10));
     }
     
     /**
@@ -447,7 +460,7 @@ public class EditorConfig extends Dialog<Object> {
     }
     
     /* Numeric Validation Limit the  characters to maxLengh AND to ONLY DigitS *************************************/
-    public EventHandler<KeyEvent> numeric_Validation(final Integer max_Lengh) {
+    private EventHandler<KeyEvent> numeric_Validation(final Integer max_Lengh) {
         return new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent e) {
