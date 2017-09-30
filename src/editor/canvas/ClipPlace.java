@@ -15,6 +15,13 @@ public class ClipPlace extends AbstractClip {
         this.setType(ClipType.Place);
         id = String.valueOf(uniqueId.getAndIncrement());
 	}
+	
+	public ClipPlace(Point2D start , Point2D end) {
+		// TODO Auto-generated constructor stub
+		super(start,end);
+        this.setType(ClipType.Place);
+        id = String.valueOf(uniqueId.getAndIncrement());
+	}
 
 	@Override
 	public Clip copy() {

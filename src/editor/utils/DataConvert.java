@@ -1,18 +1,85 @@
 package editor.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import editor.canvas.Clip;
+import editor.canvas.ClipArc;
+import editor.canvas.ClipPlace;
 import editor.canvas.SensorType;
+import javafx.geometry.Point2D;
 
 public class DataConvert {
 	
+	public static final String SENSOR_KEY = "1";
+	public static final String CHANNEL_KEY = "2";
+	
+	/**
+	 * 
+	 * @param sensorClip
+	 * @param channelClip
+	 * @return
+	 */
 	public static Topology GetConvertData(List<Clip> sensorClip, List<Clip> channelClip) {
 		Topology topology = new Topology();
 		topology.sensors = GetSensorConvertData(sensorClip);
 		topology.channels = GetChannelConvertData(channelClip);
 		return topology;
+	}
+	
+	/**
+	 * Revert data from topology file
+	 * @param topology
+	 */
+	public static HashMap<String, List<Clip>> GetRevertData (Topology topology) {
+		List<Clip> sensorClip = GetSensorClip(topology);
+		List<Clip> channelClip = GetChannelClip(topology, sensorClip);
+		HashMap<String, List<Clip>> map = new HashMap<>();
+		map.put(SENSOR_KEY, sensorClip);
+		map.put(CHANNEL_KEY, channelClip);
+		return map;
+	}
+	
+	/**
+	 * Get sensor clip from file
+	 * @param topology
+	 * @return
+	 */
+	private static List<Clip> GetSensorClip (Topology topology) {
+		List<Clip> list = new ArrayList<>();
+		for (Sensor s : topology.sensors) {
+			Clip c = new ClipPlace(new Point2D(s.X, s.Y));
+			c.setStart(s.StartX,s.StartY);
+			c.setEnd(s.EndX,s.EndY);
+			c.setName(s.Name);
+			c.setToken(Integer.parseInt(s.Token));
+			c.setEnergy(s.Energy);
+			c.setSensorType(s.Type);
+			c.setId(s.Id);
+			list.add(c);
+		}
+		return list;
+	}
+	
+	/**
+	 * Get channel clip from file
+	 * @param topology
+	 * @param sensorClip
+	 * @return
+	 */
+	private static List<Clip> GetChannelClip (Topology topology , List<Clip> sensorClips) {
+		List<Clip> list = new ArrayList<>();
+		for(Channel chn : topology.channels) {
+			Clip c = new ClipArc(
+					new Point2D(chn.StartX, chn.StartY),
+					new Point2D(chn.EndX, chn.EndY));
+			c.setId(chn.Id);
+			c.setName(chn.Name);
+			GetRelatedSensor(sensorClips, c);
+			list.add(c);
+		}
+		return list;
 	}
 	
 	/**
@@ -28,10 +95,12 @@ public class DataConvert {
 			s.Token = c.getToken();
 			s.Energy = c.getEnergy();
 			s.Type = GetSensorTypeCode(c.getSensorType());
-			s.startX = c.getStart().getX();
-			s.startY = c.getStart().getY();
-			s.endX = c.getEnd().getX();
-			s.endY = c.getEnd().getY();
+			s.X = c.getCenterX();
+			s.Y = c.getCenterY();
+			s.StartX = c.getStart().getX();
+			s.StartY = c.getStart().getY();
+			s.EndX = c.getEnd().getX();
+			s.EndY = c.getEnd().getY();
 			list.add(s);
 		}
 		return list;
@@ -71,6 +140,26 @@ public class DataConvert {
 			return 3;
 		default:
 			return 0;
+		}
+	}
+	
+	/**
+	 * Get sensor related with channel
+	 * @param sensorClips
+	 * @param point
+	 */
+	public static void GetRelatedSensor (List<Clip> sensorClips , Clip channel) {
+		for (Clip c : sensorClips) {
+			if(c.getCenterX() == channel.getStart().getX() && 
+					c.getCenterY() == channel.getStart().getY()) {
+				channel.setOutputPlace(c);
+				c.getOutArc().add(channel);
+			}
+			if(c.getCenterX() == channel.getEnd().getX() && 
+					c.getCenterY() == channel.getEnd().getY()) {
+				channel.setInputPlace(c);
+				c.getInputArc().add(channel);
+			}
 		}
 	}
 }

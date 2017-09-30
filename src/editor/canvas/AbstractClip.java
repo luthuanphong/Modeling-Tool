@@ -32,8 +32,8 @@ public abstract class AbstractClip implements Clip {
 	public AbstractClip(Point2D center) {
 		setCenter(center);
 		setSize(32, 32);
-                inputArc = new ArrayList<>();
-                outputArc = new ArrayList<>();
+        inputArc = new ArrayList<>();
+        outputArc = new ArrayList<>();
                 
 	}
 
@@ -230,6 +230,12 @@ public abstract class AbstractClip implements Clip {
     public String getToken() {
     	// TODO Auto-generated method stub
     	return String.valueOf(this.Token);
+    }
+    
+    @Override
+    public void setId(String Id) {
+    	// TODO Auto-generated method stub
+    	this.id = Id;
     }
 }
 

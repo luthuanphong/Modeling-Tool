@@ -1,5 +1,8 @@
 package editor.actions;
 
+import java.io.File;
+
+import editor.utils.DataImport;
 import editor.views.EditorWindow;
 import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
@@ -18,6 +21,9 @@ public class ActionImport implements Action {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.chooser.showOpenDialog(this.editor.getStage());
+		File chosenFile = this.chooser.showOpenDialog(this.editor.getStage());
+		if(chosenFile != null) {
+			DataImport.Import(chosenFile,this.editor);
+		}
 	}
 }

@@ -114,7 +114,9 @@ public interface Clip {
 			setHovered(false);
 		}
 	}
-        
+    
+	public void setId(String Id);
+	
 	// Colors
 	public void setColor(Color color);
 

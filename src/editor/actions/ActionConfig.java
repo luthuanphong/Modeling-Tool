@@ -6,11 +6,11 @@ import javafx.event.ActionEvent;
 
 public class ActionConfig implements Action {
 	
-	private EditorWindow editor;
+	//private EditorWindow editor;
 	private static EditorConfig config = new EditorConfig();
 	
 	public ActionConfig(EditorWindow editor) {
-		this.editor = editor;
+		//this.editor = editor;
 		config.setEditor(editor);
 	}
 	

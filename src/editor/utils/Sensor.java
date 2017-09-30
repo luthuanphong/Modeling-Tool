@@ -15,12 +15,17 @@ public class Sensor {
 	public float Energy;
 	@XmlElement(name = "Type")
 	public int Type;
-	@XmlElement(name = "StartX")
-	public double startX;
-	@XmlElement(name = "StartY")
-	public double startY;
-	@XmlElement(name = "EndX")
-	public double endX;
-	@XmlElement(name = "EndY")
-	public double endY;
+	@XmlElement(name = "X")
+	public double X;
+	@XmlElement(name = "Y")
+	public double Y;
+	@XmlElement
+	public double StartX;
+	@XmlElement
+	public double StartY;
+	@XmlElement
+	public double EndX;
+	@XmlElement
+	public double EndY;
+
 }
