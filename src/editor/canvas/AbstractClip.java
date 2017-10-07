@@ -16,7 +16,7 @@ public abstract class AbstractClip implements Clip {
     private List<Clip> outputArc;
     private Clip inputPlace;
     private Clip outputPlace;
-    protected String label, id;
+    protected String label, id, name;
     protected int sensorType = 3;
     private float energy = 100.0f;
     private int Token = 0;
@@ -178,13 +178,13 @@ public abstract class AbstractClip implements Clip {
     @Override
     public void setName(String value) {
     	// TODO Auto-generated method stub
-    	this.id = value;
+    	this.name = value;
     }
     
     @Override
     public String getName() {
     	// TODO Auto-generated method stub
-    	return this.id;
+    	return this.name;
     }
     
     @Override

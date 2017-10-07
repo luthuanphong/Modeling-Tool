@@ -14,6 +14,7 @@ public class ClipTransition extends AbstractClip {
 		super(center);
         this.setType(ClipType.Transition);
         this.id = String.valueOf(uniqueId.getAndIncrement());
+        this.name = this.id;
 	}
 
 	@Override

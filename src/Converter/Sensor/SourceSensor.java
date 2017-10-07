@@ -21,7 +21,20 @@ public class SourceSensor extends BaseSensor {
         this.Type = SensorType.SOURCE;
         this.Token = sensor.token;
     }
-
+    
+    /**
+     * 
+     * @param token
+     * @return
+     */
+    private int parseToken(String token) {
+    	try {
+    		return Integer.parseInt(token);
+    	} catch(Exception e) {
+    		return 1;
+    	}
+    }
+    
     /**
      * Convert sensor data to pnml
      */
@@ -30,7 +43,7 @@ public class SourceSensor extends BaseSensor {
 
         this.InputPlace = new Place();
         this.InputPlace.id = "src_in_"+this.sensor.Id;
-        this.InputPlace.token = Integer.parseInt(this.Token);
+        this.InputPlace.token = this.parseToken(this.Token);
         this.InputPlace.label = "Source input place";
 
         this.IntermediatePlace = new Place();

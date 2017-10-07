@@ -12,6 +12,7 @@ public class ClipArc extends AbstractClip {
 		super(start, end);
         this.setType(ClipType.Arc);
         this.id = String.valueOf(uniqueId.getAndIncrement());
+        this.name = this.id;
 	}
 	
 	@Override

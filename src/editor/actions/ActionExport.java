@@ -24,6 +24,7 @@ public class ActionExport implements Action {
 		File selectedFilePath = this.choser.showSaveDialog(this.editor.getStage());
 		DataExport.Export(selectedFilePath.getAbsolutePath(),
 				this.editor.getBoard().getPlaceClip(), 
-				this.editor.getBoard().getArcClip());
+				this.editor.getBoard().getArcClip(),
+				this.editor);
 	}
 }

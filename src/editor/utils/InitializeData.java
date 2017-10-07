@@ -9,7 +9,7 @@ package editor.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import javax.xml.bind.annotation.XmlRootElement;
 import Constants.TopologyConstants;
 import Kwsn.Link;
 import Kwsn.Sensor;
@@ -21,10 +21,11 @@ import javafx.collections.ObservableList;
  *
  * @author phongtl.hf
  */
+@XmlRootElement
 public class InitializeData {
     
     private String minSensorSendingRate = "1";
-    private String maxSensorSendingRate = "5";
+    private String maxSensorSendingRate = "5";   
     private String minSensorProcessingRate = "1";
     private String maxSensorProcessingRate = "5";
     private String minChannelSendingRate = "1";
@@ -37,31 +38,31 @@ public class InitializeData {
     private ObservableList<Clip> channelClip;
     private List<Clip> originSensorClip;
     private List<Clip> originChannelClip;
-    
+  
     public void setMinSensorSendingRate (String value) {
         this.minSensorSendingRate = value;
     }
-    
+
     public void setMaxSensorSendingRate (String value) {
         this.maxSensorSendingRate = value;
     }
-    
+
     public void setMinSensorProcessingRate (String value) {
         this.minSensorProcessingRate = value;
     }
-    
+ 
     public void setMaxSensorProcessingRate (String value) {
         this.maxSensorProcessingRate = value;
     }
-    
+  
     public void setMinChannelSendingRate (String value) {
         this.minChannelSendingRate = value;
     }
-    
+ 
     public void setMaxChannelSendingRate (String value) {
         this.maxChannelSendingRate = value;
     }
-    
+
     public void setNumberOfPackage (String value) {
         this.numberOfPackage = value;
     }
@@ -81,31 +82,31 @@ public class InitializeData {
     public void setOriginChannelClip (List<Clip> value) {
     	this.originChannelClip = value;
     }
-    
+
     public String getMinSensorSendingRate () {
         return this.minSensorSendingRate;
     }
-    
+
     public String getMaxSensorSendingRate () {
         return this.maxSensorSendingRate;
     }
-    
+
     public String getMinSensorProcessingRate () {
         return this.minSensorProcessingRate;
     }
-    
+ 
     public String getMaxSensorProcessingRate () {
         return this.maxSensorProcessingRate;
     }
-    
+
     public String getMinChannelSendingRate () {
         return this.minChannelSendingRate;
     }
-    
+
     public String getMaxChannelSendingRate () {
         return this.maxChannelSendingRate;
     }
-    
+
     public String getNumberOfPackage () {
         return this.numberOfPackage;
     }
@@ -146,7 +147,7 @@ public class InitializeData {
     	//Energy
     	return map;
     }
-
+    
 	public String getSensorMaxBufferSize() {
 		return sensorMaxBufferSize;
 	}
@@ -158,7 +159,7 @@ public class InitializeData {
 	public String getSensorMaxQueueSize() {
 		return sensorMaxQueueSize;
 	}
-
+ 
 	public void setSensorMaxQueueSize(String sensorMaxQueueSize) {
 		this.sensorMaxQueueSize = sensorMaxQueueSize;
 	}

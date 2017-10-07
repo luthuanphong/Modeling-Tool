@@ -14,6 +14,7 @@ public class ClipPlace extends AbstractClip {
 		super(center);
         this.setType(ClipType.Place);
         id = String.valueOf(uniqueId.getAndIncrement());
+        name = id;
 	}
 	
 	public ClipPlace(Point2D start , Point2D end) {

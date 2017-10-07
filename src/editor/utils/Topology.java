@@ -10,5 +10,6 @@ public class Topology {
 	public List<Sensor> sensors;
 	@XmlElement(name = "Channel")
 	public List<Channel> channels;
-	
+	@XmlElement(name = "CommonData")
+	public CommonData data;
 }
