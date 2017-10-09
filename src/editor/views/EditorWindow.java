@@ -15,7 +15,6 @@ import editor.utils.Selection;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -31,9 +30,10 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 	private EditorToolBar toolBar;
 	private GraphicsContext ctx;
 	private InitializeData data;
-	private ScrollPane scrollBar;
+	private ZoomableScrollPane scrollBar;
 	private Stage stage;
 	public static final String APP_NAME = "Modeling Tool";
+	private double ZoomSize = 1;
 
 	public EditorWindow(Stage stage) {
 		// -- Setup
@@ -41,6 +41,8 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		board = new Board();
 		selection = new Selection();
 		canvas = new Canvas(6000, 6000);
+		canvas.setScaleX(this.ZoomSize);
+		canvas.setScaleY(this.ZoomSize);
 		tool = new ToolSelect();
 		ctx = canvas.getGraphicsContext2D();
 		Clipboard.getInstance().addListener(this);
@@ -48,7 +50,7 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		
 		menuBar = new EditorMenuBar(this);
 		toolBar = new EditorToolBar(this);
-		scrollBar = new ScrollPane(canvas);
+		scrollBar = new ZoomableScrollPane(canvas);
 		scrollBar.setPrefSize(1024, 768);
 		scrollBar.setMaxSize(5000, 5000);
 		scrollBar.setFitToHeight(false);
@@ -143,4 +145,13 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
     public Stage getStage () {
     	return this.stage;
     }
+    
+    public void ZoomIn() {
+    	this.scrollBar.ZoomIn();
+    }
+    
+    public void ZoomOut() {
+    	this.scrollBar.ZoomOut();
+    }
+    
 }

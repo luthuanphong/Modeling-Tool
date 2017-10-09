@@ -60,4 +60,12 @@ public class Icons {
 	public static ImageView getImageConfig() {
 		return new ImageView(new Image("res/img/config.png"));
 	}
+	
+	public static ImageView getImageZoomIn() {
+		return new ImageView(new Image("res/img/zoom-in.png"));
+	}
+	
+	public static ImageView getImageZoomOut() {
+		return new ImageView(new Image("res/img/zoom-out.png"));
+	}
 }

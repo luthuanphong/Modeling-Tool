@@ -14,6 +14,8 @@ import editor.actions.ActionSelect;
 import editor.actions.ActionToken;
 import editor.actions.ActionTransition;
 import editor.actions.ActionUndo;
+import editor.actions.ActionZoomIn;
+import editor.actions.ActionZoomOut;
 import editor.canvas.Icons;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
@@ -25,7 +27,7 @@ public class EditorToolBar extends ToolBar {
 	private Button btnNew, btnImport, btnExport;
 	private Button btnUndo, btnRedo, btnCopy, btnPaste, btnDelete;
 	private Button btnSelect, btnPlace, btnTransition, btnArc, btnToken;
-	private Button btnConfig;
+	private Button btnConfig, btnZoomIn, btnZoomOut;
 
 	public EditorToolBar(EditorWindow editor) {
 		this.editor = editor;
@@ -34,7 +36,7 @@ public class EditorToolBar extends ToolBar {
 		setAlts();
 		setActions();
 		getItems().addAll(btnNew, btnImport, btnExport, new Separator(), btnCopy, btnPaste, new Separator(), btnUndo,
-				btnRedo, btnDelete, new Separator(), btnSelect, btnPlace, btnTransition, btnArc, btnConfig, btnToken);
+				btnRedo, btnDelete, new Separator(), btnSelect, btnPlace, btnTransition, btnArc, btnConfig, btnToken, btnZoomIn, btnZoomOut);
 	}
 
 	private void initialize() {
@@ -54,6 +56,8 @@ public class EditorToolBar extends ToolBar {
 		btnArc = new Button();
 		btnToken = new Button();
 		btnConfig = new Button();
+		btnZoomIn = new Button();
+		btnZoomOut = new Button();
 	}
 
 	private void setIcons() {
@@ -72,6 +76,8 @@ public class EditorToolBar extends ToolBar {
 		btnArc.setGraphic(Icons.getImageArc());
 		btnToken.setGraphic(Icons.getImageToken());
 		btnConfig.setGraphic(Icons.getImageConfig());
+		btnZoomIn.setGraphic(Icons.getImageZoomIn());
+		btnZoomOut.setGraphic(Icons.getImageZoomOut());
 	}
 
 	private void setAlts() {
@@ -90,6 +96,8 @@ public class EditorToolBar extends ToolBar {
 		btnArc.setTooltip(new Tooltip("Arc"));
 		btnToken.setTooltip(new Tooltip("Token"));
 		btnConfig.setTooltip(new Tooltip("Config"));
+		btnZoomIn.setTooltip(new Tooltip("Zoom In"));
+		btnZoomOut.setTooltip(new Tooltip("Zoom Out"));
 	}
 
 	private void setActions() {
@@ -108,6 +116,8 @@ public class EditorToolBar extends ToolBar {
 		btnArc.setOnAction(e -> new ActionArc(editor).actionPerformed(e));
 		btnToken.setOnAction(e -> new ActionToken(editor).actionPerformed(e));
 		btnConfig.setOnAction(e -> new ActionConfig(editor).actionPerformed(e));
+		btnZoomIn.setOnAction(e -> new ActionZoomIn(editor).actionPerformed(e));
+		btnZoomOut.setOnAction(e -> new ActionZoomOut(editor).actionPerformed(e));
 	}
 
 	public Button getButtonSelect() {

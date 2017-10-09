@@ -14,6 +14,8 @@ import editor.actions.ActionSelect;
 import editor.actions.ActionToken;
 import editor.actions.ActionTransition;
 import editor.actions.ActionUndo;
+import editor.actions.ActionZoomIn;
+import editor.actions.ActionZoomOut;
 import editor.canvas.Icons;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -24,6 +26,7 @@ public class EditorMenuBar extends MenuBar {
 	private MenuItem fileNew, fileImport, fileExport, fileQuit;
 	private MenuItem editCopy, editPaste, editUndo, editRedo, editDelete;
 	private MenuItem toolSelect, toolPlace, toolTransition, toolArc, toolToken;
+	private MenuItem toolZoomIn, toolZoomOut;
 	
 	public EditorMenuBar(EditorWindow editor) {		
 		// -- Menu
@@ -59,7 +62,10 @@ public class EditorMenuBar extends MenuBar {
 		toolTransition = new MenuItem("_Transition", Icons.getImageTransition());
 		toolArc = new MenuItem("_Arc", Icons.getImageArc());
 		toolToken = new MenuItem("Token/_Fire transitions", Icons.getImageToken());
-		menuTool.getItems().addAll(toolSelect, toolPlace, toolTransition, toolArc, toolToken);
+		toolZoomIn = new MenuItem("Zoom in",Icons.getImageZoomIn());
+		toolZoomOut = new MenuItem("Zoom out", Icons.getImageZoomOut());
+		
+		menuTool.getItems().addAll(toolSelect, toolPlace, toolTransition, toolArc, toolToken, toolZoomIn, toolZoomOut);
 
 		// -- Actions Menu		
 		fileNew.setOnAction(e -> new ActionNew(editor).actionPerformed(e));
@@ -78,6 +84,8 @@ public class EditorMenuBar extends MenuBar {
 		toolTransition.setOnAction(e -> new ActionTransition(editor).actionPerformed(e));
 		toolArc.setOnAction(e -> new ActionArc(editor).actionPerformed(e));
 		toolToken.setOnAction(e -> new ActionToken(editor).actionPerformed(e));
+		toolZoomIn.setOnAction(e -> new ActionZoomIn(editor).actionPerformed(e));
+		toolZoomOut.setOnAction(e -> new ActionZoomOut(editor).actionPerformed(e));
 		
 		getMenus().addAll(menuFile, menuEdit, menuTool);
 	}
