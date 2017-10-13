@@ -212,6 +212,7 @@ public class InitializeData {
     		l.id = c.getId();
     		l.From = c.getOutputPlace().getId();
     		l.To = c.getInputPlace().getId();
+    		list.add(l);
     	}
      	return list;
     }
