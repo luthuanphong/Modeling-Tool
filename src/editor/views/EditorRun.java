@@ -85,6 +85,10 @@ public class EditorRun extends Dialog<Object> {
 	}
 	
 	private void Run() {
+		this.window.hide();
+		EditorAnaly analyzer = new EditorAnaly();
+		analyzer.Show();
+		analyzer.setStatus(0);
 		String baseDirectoryPath = new java.io.File(".").getAbsolutePath();
 		if(this.unicast.isSelected()) {
 			this.converter = new UnicastConverter(this.data.getTopologyData());
@@ -98,6 +102,6 @@ public class EditorRun extends Dialog<Object> {
 		this.converter.outputPnmlFile(tempFolderPath.getPath());
 		this.converter.outputProcessFile(tempFolderPath.getPath());
 		this.converter.outputMinimizeProcessFile(tempFolderPath.getPath());
-		
+		analyzer.setStatus(1);
 	}
 }

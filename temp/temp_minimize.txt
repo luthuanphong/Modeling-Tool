@@ -9,18 +9,55 @@ int NUMBER_OF_PACKAGE = 1;
 int SENSOR_MIN_SENDING_RATE = 1;
 int SENSOR_MIN_PROCESSING_RATE = 1;
 int CHANEL_MIN_SENDING_RATE = 1;
-int Buffer_2 = 0;
-int Queue_2 = 0;
-int Buffer_5 = 0;
-int Queue_5 = 0;
+int Buffer_0 = 0;
+int Queue_0 = 0;
 int Buffer_1 = 0;
 int Queue_1 = 0;
+int Buffer_2 = 0;
+int Queue_2 = 0;
 int Buffer_3 = 0;
 int Queue_3 = 0;
-int Buffer_4 = 0;
-int Queue_4 = 0;
 main {
 search(CONGESTION);
+}
+
+
+source_gen {
+int random = randomInt(1, NUMBER_OF_PACKAGE);
+if (NUMBER_OF_PACKAGE >= random) {
+NUMBER_OF_PACKAGE = NUMBER_OF_PACKAGE - random;
+}
+else {
+random = NUMBER_OF_PACKAGE;
+NUMBER_OF_PACKAGE = 0;
+}Buffer_0 = Buffer_0 + random;
+}
+
+
+source_send {
+int random = randomInt(SENSOR_MIN_SENDING_RATE, SENSOR_MAX_SENDING_RATE);
+if (Buffer_0 >= random) {
+Buffer_0 = Buffer_0 - random;
+}
+else {
+random = Buffer_0;
+Buffer_0 = 0;
+}Queue_0 = Queue_0 + random;
+}
+
+
+int_send_1 {
+int random = randomInt(SENSOR_MIN_SENDING_RATE, SENSOR_MAX_SENDING_RATE);
+if (Buffer_1 >= random) {
+Buffer_1 = Buffer_1 - random;
+}
+else {
+random = Buffer_1;
+Buffer_1 = 0;
+}Queue_1 = Queue_1 + random;
+if (Queue_1 > SENSOR_MAX_QUEUE_SIZE) {
+CONGESTION = true;
+}
 }
 
 
@@ -41,42 +78,6 @@ CONGESTION = true;
 
 Process {
 int random = randomInt(SENSOR_MIN_PROCESSING_RATE, SENSOR_MAX_PROCESSING_RATE);
-if (Buffer_5 >= random) {
-Buffer_5 = Buffer_5 - random;
-}
-else {
-random = Buffer_5;
-Buffer_5 = 0;
-}Queue_5 = Queue_5 + random;
-}
-
-
-source_gen {
-int random = randomInt(1, NUMBER_OF_PACKAGE);
-if (NUMBER_OF_PACKAGE >= random) {
-NUMBER_OF_PACKAGE = NUMBER_OF_PACKAGE - random;
-}
-else {
-random = NUMBER_OF_PACKAGE;
-NUMBER_OF_PACKAGE = 0;
-}Buffer_1 = Buffer_1 + random;
-}
-
-
-source_send {
-int random = randomInt(SENSOR_MIN_SENDING_RATE, SENSOR_MAX_SENDING_RATE);
-if (Buffer_1 >= random) {
-Buffer_1 = Buffer_1 - random;
-}
-else {
-random = Buffer_1;
-Buffer_1 = 0;
-}Queue_1 = Queue_1 + random;
-}
-
-
-int_send_3 {
-int random = randomInt(SENSOR_MIN_SENDING_RATE, SENSOR_MAX_SENDING_RATE);
 if (Buffer_3 >= random) {
 Buffer_3 = Buffer_3 - random;
 }
@@ -84,24 +85,6 @@ else {
 random = Buffer_3;
 Buffer_3 = 0;
 }Queue_3 = Queue_3 + random;
-if (Queue_3 > SENSOR_MAX_QUEUE_SIZE) {
-CONGESTION = true;
-}
-}
-
-
-int_send_4 {
-int random = randomInt(SENSOR_MIN_SENDING_RATE, SENSOR_MAX_SENDING_RATE);
-if (Buffer_4 >= random) {
-Buffer_4 = Buffer_4 - random;
-}
-else {
-random = Buffer_4;
-Buffer_4 = 0;
-}Queue_4 = Queue_4 + random;
-if (Queue_4 > SENSOR_MAX_QUEUE_SIZE) {
-CONGESTION = true;
-}
 }
 
 
