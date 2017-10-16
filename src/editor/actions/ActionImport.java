@@ -23,6 +23,7 @@ public class ActionImport implements Action {
 	public void actionPerformed(ActionEvent e) {
 		File chosenFile = this.chooser.showOpenDialog(this.editor.getStage());
 		if(chosenFile != null) {
+			this.editor.getBoard().clear();
 			DataImport.Import(chosenFile,this.editor);
 		}
 	}

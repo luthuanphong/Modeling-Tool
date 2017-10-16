@@ -19,6 +19,9 @@ public class KwsnDataConvert {
 		HashMap<String, List<Clip>> map = new HashMap<>();
 		List<Clip> sensorsClip = GetSensorClip(sensors);
 		List<Clip> channelsClip = GetChannelClip(sensorsClip, links);
+		for(Clip c : sensorsClip) {
+			c.setName(c.getId());
+		}
 		map.put(SENSOR_KEY, sensorsClip);
 		map.put(CHANNEL_KEY, channelsClip);
 		return map;

@@ -56,6 +56,7 @@ public class EditorAnaly extends Dialog<Object> implements BackgroundCallBack {
 					EditorAnaly.this.analyzer = null;
 				}
 				EditorAnaly.this.window.hide();
+				EditorAnaly.this.close();
 			}
 		});
 		this.cancel.setOnAction(new EventHandler<ActionEvent>() {
@@ -68,6 +69,7 @@ public class EditorAnaly extends Dialog<Object> implements BackgroundCallBack {
 					EditorAnaly.this.analyzer = null;
 				}
 				EditorAnaly.this.window.hide();
+				EditorAnaly.this.close();
 			}
 		});
 	}

@@ -15,7 +15,6 @@ public class BackgroundRunner extends Thread {
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
-			callBack.TransferSignal("Analyzing...");
 			String baseDirectoryPath = new java.io.File(".").getAbsolutePath();
 			java.io.File tempFolderPath = new java.io.File(baseDirectoryPath,"temp");
 			java.io.File pnmlFilePath = new java.io.File(tempFolderPath.getPath(),"temp.pnml");
@@ -24,6 +23,7 @@ public class BackgroundRunner extends Thread {
 			Verify verify = new Verify();
 			String verifyResult = verify.getVeriInfo(pnmlFilePath.getPath(), txtFilePath.getPath(), txtMinimizeFilePath.getPath());
 			verify = null;	
+			System.gc();
 			Platform.runLater(new Runnable() {
 				
 				@Override
