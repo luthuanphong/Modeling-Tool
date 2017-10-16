@@ -49,6 +49,10 @@ public abstract class AbstractClip implements Clip {
 	
 	@Override
 	public String getId() {
+		if (this.type == ClipType.Arc) {
+			this.id = this.getOutputPlace().getId() +"_"+this.getInputPlace().getId();
+			this.name = this.id;
+		}
 		return this.id;
 	}
 	

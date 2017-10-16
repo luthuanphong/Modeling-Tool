@@ -11,8 +11,6 @@ public class ClipArc extends AbstractClip {
 	public ClipArc(Point2D start, Point2D end) {
 		super(start, end);
         this.setType(ClipType.Arc);
-        this.id = String.valueOf(uniqueId.getAndIncrement());
-        this.name = this.id;
 	}
 	
 	@Override
@@ -34,6 +32,8 @@ public class ClipArc extends AbstractClip {
 	}
 	
 	private void drawLabel(GraphicsContext ctx) {
+		this.id = this.getOutputPlace().getId() +"_"+this.getInputPlace().getId();
+		this.name = this.id;
 		ctx.setFill(Colors.NETBORDCOLOR);
 		ctx.fillText(this.id, getCenterX()-10, getCenterY()-10, 100);
 	}

@@ -58,6 +58,7 @@ public class Board {
 		case Place:
 			placeClips.remove(toRemove);
 			sensorClip.remove(toRemove);
+			this.removeRelatedArc(toRemove);
 			break;
 		case Arc:
 			arcClips.remove(toRemove);
@@ -79,6 +80,7 @@ public class Board {
                         case Place :
                             placeClips.remove(c);
                             sensorClip.remove(c);
+                            this.removeRelatedArc(c);
                             break;
                         case Arc:
                             arcClips.remove(c);
@@ -104,5 +106,18 @@ public class Board {
 		//clips.forEach(clip -> clip.draw(ctx));
 		arcClips.forEach(clip -> clip.draw(ctx));
 		placeClips.forEach(clip -> clip.draw(ctx));
+	}
+	
+	private void removeRelatedArc(Clip place) {
+		for(Clip c : place.getInputArc() ) {			
+			this.arcClips.remove(c);
+			this.channelClip.remove(c);
+			c.getOutputPlace().getOutArc().remove(c);
+		}
+		for(Clip c : place.getOutArc()) {
+			this.arcClips.remove(c);
+			this.channelClip.remove(c);
+			c.getInputPlace().getInputArc().remove(c);
+		}
 	}
 }
