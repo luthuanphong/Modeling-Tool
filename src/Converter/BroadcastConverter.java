@@ -99,7 +99,7 @@ public class BroadcastConverter extends Converter {
         try {
             JAXBContext context = JAXBContext.newInstance(Pnml.class);
             Marshaller marshaller = context.createMarshaller();
-            marshaller.marshal(pnml,new File(folderPath+"temp.pnml"));
+            marshaller.marshal(pnml,new File(folderPath+"/temp.pnml"));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
@@ -109,7 +109,7 @@ public class BroadcastConverter extends Converter {
     public void outputProcessFile(String folderPath) {
 
         try {
-            FileWriter writer = new FileWriter(folderPath+"temp.txt");
+            FileWriter writer = new FileWriter(folderPath+"/temp.txt");
             for (Variable v : variables) {
                 writer.write(v.toString());
                 writer.write(System.lineSeparator());
@@ -127,7 +127,7 @@ public class BroadcastConverter extends Converter {
     @Override
     public void outputMinimizeProcessFile(String folderPath) {
         try {
-            FileWriter writer = new FileWriter(folderPath+"temp_minize.txt");
+            FileWriter writer = new FileWriter(folderPath+"/temp_minize.txt");
             for (Variable v : variables) {
                 writer.write(v.toMinimizeString());
                 writer.write(System.lineSeparator());

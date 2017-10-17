@@ -99,9 +99,10 @@ public class EditorRun extends Dialog<Object> {
 		if (!tempFolderPath.exists()) {
 			tempFolderPath.mkdirs();
 		}
-		this.converter.outputPnmlFile(tempFolderPath.getPath());
-		this.converter.outputProcessFile(tempFolderPath.getPath());
-		this.converter.outputMinimizeProcessFile(tempFolderPath.getPath());
+		this.converter.Convert(tempFolderPath.getPath());
+		//this.converter.outputPnmlFile(tempFolderPath.getPath());
+		//this.converter.outputProcessFile(tempFolderPath.getPath());
+		//this.converter.outputMinimizeProcessFile(tempFolderPath.getPath());
 		analyzer.setStatus(1);
 	}
 }
