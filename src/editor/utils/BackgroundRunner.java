@@ -15,7 +15,7 @@ public class BackgroundRunner extends Thread {
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
-			String baseDirectoryPath = new java.io.File(".").getAbsolutePath();
+			String baseDirectoryPath = System.getProperty("user.dir");
 			java.io.File tempFolderPath = new java.io.File(baseDirectoryPath,"temp");
 			java.io.File pnmlFilePath = new java.io.File(tempFolderPath.getPath(),"temp.pnml");
 			java.io.File txtFilePath = new java.io.File(tempFolderPath.getPath(),"temp.txt");

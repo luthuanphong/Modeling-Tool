@@ -51,7 +51,7 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 		menuBar = new EditorMenuBar(this);
 		toolBar = new EditorToolBar(this);
 		scrollBar = new ZoomableScrollPane(canvas);
-		scrollBar.setPrefSize(1024, 768);
+		scrollBar.setPrefSize(1024, 640);
 		scrollBar.setMaxSize(5000, 5000);
 		scrollBar.setFitToHeight(false);
 		scrollBar.setFitToWidth(false);

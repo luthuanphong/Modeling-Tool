@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="300" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="status" layoutX="14.0" layoutY="14.0" maxHeight="120.0" maxWidth="275.0" prefHeight="20.0" prefWidth="275.0" />
+      <ProgressBar fx:id="progress" layoutX="14.0" layoutY="147.0" prefHeight="18.0" prefWidth="273.0" progress="0.0" />
+      <Button fx:id="cancel" layoutX="120.0" layoutY="171.0" maxHeight="25.0" maxWidth="60.0" minHeight="25.0" minWidth="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Cancel" />
+      <TextArea fx:id="result" editable="false" layoutX="14.0" layoutY="37.0" prefHeight="102.0" prefWidth="273.0" />
+   </children>
+</AnchorPane>

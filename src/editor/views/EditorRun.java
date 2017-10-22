@@ -89,7 +89,7 @@ public class EditorRun extends Dialog<Object> {
 		EditorAnaly analyzer = new EditorAnaly();
 		analyzer.Show();
 		analyzer.setStatus(0);
-		String baseDirectoryPath = new java.io.File(".").getAbsolutePath();
+		String baseDirectoryPath = System.getProperty("user.dir");
 		if(this.unicast.isSelected()) {
 			this.converter = new UnicastConverter(this.data.getTopologyData());
 		} else {
