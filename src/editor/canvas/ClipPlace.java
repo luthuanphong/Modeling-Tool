@@ -64,18 +64,22 @@ public class ClipPlace extends AbstractClip {
 
 	private void drawForeground(GraphicsContext ctx) {
 		drawState(ctx);
-		ctx.strokeOval(getStart().getX(), getStart().getY(), getWidth() - 1, getHeight() - 1);
+		//ctx.strokeOval(getStart().getX(), getStart().getY(), getWidth() - 1, getHeight() - 1);
 	}
 
 	private void drawBackground(GraphicsContext ctx) {
 		if(this.getSensorType().equals(SensorType.SOURCE)) {
-			ctx.setFill(Colors.SENSORSOURCE);
+			//ctx.setFill(Colors.SENSORSOURCE);
+			ctx.drawImage(Icons.SourceSensor, getStart().getX(), getStart().getY(),32,32);
 		} else if (this.getSensorType().equals(SensorType.SINK)) {
-			ctx.setFill(Colors.SENSORSINK);
+			//ctx.setFill(Colors.SENSORSINK);
+			ctx.drawImage(Icons.SinkSensor, getStart().getX(), getStart().getY(),32,32);
 		} else {
-			ctx.setFill(Colors.NETCOLOR);
+			//ctx.setFill(Colors.NETCOLOR);
+			ctx.drawImage(Icons.IntermediateSensor, getStart().getX(), getStart().getY(),32,32);
 		}
-		ctx.fillOval(getStart().getX(), getStart().getY(), getWidth(), getHeight());
+		//ctx.setFill(Colors.NETCOLOR);
+		//ctx.fillOval(getStart().getX(), getStart().getY(), getWidth(), getHeight());
 	}
 
 	private void drawToken(GraphicsContext ctx) {

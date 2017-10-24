@@ -5,6 +5,12 @@ import javafx.scene.image.ImageView;
 
 public class Icons {
 	
+	public static Image IntermediateSensor =new Image("res/img/normalsensor.png");
+	
+	public static Image SourceSensor = new Image("res/img/sourcesensor.png");
+	
+	public static Image SinkSensor = new Image("res/img/sinksensor.png");
+	
 	public static ImageView getImageNew() {
 		return new ImageView(new Image("res/img/new.png"));
 	}

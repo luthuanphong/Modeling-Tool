@@ -22,9 +22,11 @@ public class ActionExport implements Action {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		File selectedFilePath = this.choser.showSaveDialog(this.editor.getStage());
+		if(selectedFilePath != null) {
 		DataExport.Export(selectedFilePath.getAbsolutePath(),
 				this.editor.getBoard().getPlaceClip(), 
 				this.editor.getBoard().getArcClip(),
 				this.editor);
+		}
 	}
 }

@@ -1,5 +1,8 @@
 package editor.actions;
 
+import java.io.File;
+
+import editor.utils.DataExport;
 import editor.views.EditorWindow;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -8,18 +11,31 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class ActionNew implements Action {	
 	private EditorWindow editor;
-
+	private FileChooser choser;
+	
 	public ActionNew(EditorWindow editor) {
 		this.editor = editor;
+		this.choser = new FileChooser();
+		this.choser.getExtensionFilters().add(new ExtensionFilter("Topology files", "*.topo"));
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (userChoice() == ButtonType.OK) {
+		ButtonType type = userChoice();
+		if (type == ButtonType.YES) {
+			File selectedFilePath = this.choser.showSaveDialog(this.editor.getStage());
+			if(selectedFilePath != null) {
+			DataExport.Export(selectedFilePath.getAbsolutePath(),
+					this.editor.getBoard().getPlaceClip(), 
+					this.editor.getBoard().getArcClip(),
+					this.editor);
+			}
 			new EditorWindow(new Stage());
 			new ActionQuit(editor).actionPerformed(e);
 		} else {
@@ -29,11 +45,8 @@ public class ActionNew implements Action {
 	}
 
 	private ButtonType userChoice() {
-		ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-		ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-
 		DialogPane dialogPane = new FixedOrderButton();
-		dialogPane.getButtonTypes().setAll(yes, no);
+		dialogPane.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
 		dialogPane.setContentText("Do you want to save this session?");
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);

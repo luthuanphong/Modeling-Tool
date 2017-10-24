@@ -1,6 +1,5 @@
 package editor.actions;
 
-import editor.EditorMain;
 import editor.utils.Clipboard;
 import editor.views.EditorWindow;
 import javafx.event.ActionEvent;
@@ -15,6 +14,6 @@ public class ActionQuit implements Action {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Clipboard.getInstance().removeListener(editor);
-		EditorMain.getStage().close();
+		this.editor.getStage().close();
 	}
 }

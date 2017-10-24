@@ -41,7 +41,7 @@ public class ClipArc extends AbstractClip {
 	private void drawForeground(GraphicsContext ctx) {
 		drawState(ctx);
 		//ctx.strokeRect(getStart().getX(), getStart().getY(), getWidth() - 1, getHeight() - 1);
-                ctx.strokeLine(getStart().getX(), getStart().getY(), getEnd().getX(), getEnd().getY());
+        ctx.strokeLine(getStart().getX(), getStart().getY(), getEnd().getX(), getEnd().getY());               
 	}
 	
 	private void drawBackground(GraphicsContext ctx) {
