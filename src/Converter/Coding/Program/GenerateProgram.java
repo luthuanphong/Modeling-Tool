@@ -6,10 +6,13 @@ import Converter.Sensor.BaseSensor;
 public class GenerateProgram extends BaseProgram {
 
     private Variable buffer;
+    
+    private Variable energy;
 
     public GenerateProgram (String id, BaseSensor sensor) {
         this.buffer = sensor.buffer;
         this.id = id;
+        this.energy = sensor.InitiaiEnergy;
     }
 
     @Override
@@ -46,10 +49,14 @@ public class GenerateProgram extends BaseProgram {
         //        Operator.Compare(buffer.getVariableName(),CommonVariable.SENSOR_MAX_BUFFER_SIZE,">"),
         //        Operator.AssignValue(CommonVariable.CONGESTION,"true")));
         //pro.append(System.lineSeparator());
-
+        pro.append(Operator.Minus(energy.getVariableName(), energy.getVariableName(),Function.createFunction("randomFloat","0.2", "0.3")));
+        pro.append(System.lineSeparator());
         //End of program
         pro.append("}").append(System.lineSeparator())
                 .append(System.lineSeparator());
+        
+
+        
         return pro.toString();
     }
 }

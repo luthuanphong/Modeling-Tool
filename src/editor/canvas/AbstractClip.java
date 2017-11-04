@@ -18,7 +18,7 @@ public abstract class AbstractClip implements Clip {
     private Clip outputPlace;
     protected String label, id, name;
     protected int sensorType = 3;
-    private float energy = 100.0f;
+    private float energy = 10.0f;
     private int Token = 0;
 
 	public AbstractClip() {

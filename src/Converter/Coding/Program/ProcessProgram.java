@@ -7,11 +7,13 @@ public class ProcessProgram extends BaseProgram {
 
     private Variable buffer;
     private Variable queue;
+    private Variable energy;
 
     public ProcessProgram (String id, BaseSensor sensor) {
         this.buffer = sensor.buffer;
         this.queue = sensor.queue;
         this.id = id;
+        this.energy = sensor.InitiaiEnergy;
     }
 
     @Override
@@ -43,8 +45,13 @@ public class ProcessProgram extends BaseProgram {
         //        Operator.Compare(queue.getVariableName(),CommonVariable.SENSOR_MAX_QUEUE_SIZE,">"),
         //        Operator.AssignValue(CommonVariable.CONGESTION,"true")));
         //pro.append(System.lineSeparator());
+        pro.append(Operator.Minus(energy.getVariableName(), energy.getVariableName(),Function.createFunction("randomFloat","0.1", "0.2")));
+        pro.append(System.lineSeparator());
         pro.append("}").append(System.lineSeparator())
                 .append(System.lineSeparator());
+        
+
+        
         return pro.toString();
     }
 }

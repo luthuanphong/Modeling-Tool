@@ -2,6 +2,8 @@ package editor.views;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import editor.utils.BackgroundCallBack;
 import editor.utils.BackgroundRunner;
 import editor.utils.Verify;
@@ -115,6 +117,13 @@ public class EditorAnaly extends Dialog<Object> implements BackgroundCallBack {
 	public void UpdateButton() {
 		// TODO Auto-generated method stub
 		this.cancel.setText("OK");
+	}
+
+	@Override
+	public void TransferException(String Message) {
+		this.window.hide();
+		javax.swing.JOptionPane errorDialog = new JOptionPane();
+		errorDialog.showMessageDialog(null, Message, "Error", JOptionPane.WARNING_MESSAGE);
 	}
 
 }

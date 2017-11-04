@@ -63,6 +63,7 @@ public class BroadcastConverter extends Converter {
                 baseSensors.add(sensor);
                 variables.add(sensor.buffer);
                 variables.add(sensor.queue);
+                variables.add(sensor.InitiaiEnergy);
                 if (sensor.Type == SensorType.SOURCE) {
 
                     BaseProgram genProgram = new GenerateProgram(sensor.Generate.id,sensor);

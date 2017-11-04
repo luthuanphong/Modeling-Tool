@@ -37,7 +37,7 @@ public class KwsnDataConvert {
 			c.setEnd(c.getCenterX()+16,c.getCenterY()+16);
 			c.setName(s.Name);
 			c.setId(s.Id);
-			c.setEnergy(s.energy);
+			//c.setEnergy(s.energy);
 			switch (s.Type) {
 			case 1:
 				c.setSensorType(1);

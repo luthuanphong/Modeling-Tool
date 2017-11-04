@@ -20,6 +20,7 @@ public class SourceSensor extends BaseSensor {
         this.queue = new Variable(BaseType.INT,"Queue_"+this.sensor.Id,"0");
         this.Type = SensorType.SOURCE;
         this.Token = sensor.token;
+        this.InitiaiEnergy = new Variable(BaseType.FLOAT, "energy_"+this.sensor.Id, sensor.energy+"");
     }
     
     /**

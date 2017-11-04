@@ -51,6 +51,14 @@ public class BackgroundRunner extends Thread {
 		
 		}catch(Exception ex) {
 			//callBack.TransferSignal(ex.getMessage());
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					BackgroundRunner.this.callBack.TransferException(ex.getClass().getName() +": "+ex.getMessage());
+				}
+			});
 		}
 	}
 		

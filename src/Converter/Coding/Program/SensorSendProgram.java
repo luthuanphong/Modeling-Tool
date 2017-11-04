@@ -9,12 +9,15 @@ public class SensorSendProgram extends BaseProgram {
     private Variable buffer;
 
     private Variable queue;
+    
+    private Variable energy;
 
     private SensorType type;
 
     public SensorSendProgram(String id, BaseSensor sensor) {
         this.buffer = sensor.buffer;
         this.queue = sensor.queue;
+        this.energy = sensor.InitiaiEnergy;
         this.id = id;
         this.type = sensor.Type;
     }
@@ -54,8 +57,12 @@ public class SensorSendProgram extends BaseProgram {
             pro.append(System.lineSeparator());
 
         }
+        pro.append(Operator.Minus(energy.getVariableName(), energy.getVariableName(),Function.createFunction("randomFloat","0.1", "0.2")));
+        pro.append(System.lineSeparator());
         pro.append("}").append(System.lineSeparator())
                 .append(System.lineSeparator());
+        
+
         return pro.toString();
     }
 }

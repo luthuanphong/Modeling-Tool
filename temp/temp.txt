@@ -11,14 +11,19 @@ const int SENSOR_MIN_PROCESSING_RATE = 1;
 const int CHANEL_MIN_SENDING_RATE = 1;
 int Buffer_2 = 0;
 int Queue_2 = 0;
+float energy_2 = 10.0;
 int Buffer_5 = 0;
 int Queue_5 = 0;
+float energy_5 = 10.0;
 int Buffer_1 = 0;
 int Queue_1 = 0;
+float energy_1 = 10.0;
 int Buffer_3 = 0;
 int Queue_3 = 0;
+float energy_3 = 10.0;
 int Buffer_4 = 0;
 int Queue_4 = 0;
+float energy_4 = 10.0;
 int Channel_Buffer_1_2 = 0;
 int Channel_Buffer_2_4 = 0;
 int Channel_Buffer_4_5 = 0;
@@ -41,6 +46,7 @@ Buffer_2 = 0;
 if (Queue_2 > SENSOR_MAX_QUEUE_SIZE) {
 CONGESTION = true;
 }
+energy_2 = energy_2 - randomFloat(0.1, 0.2);
 }
 
 
@@ -53,6 +59,7 @@ else {
 random = Buffer_5;
 Buffer_5 = 0;
 }Queue_5 = Queue_5 + random;
+energy_5 = energy_5 - randomFloat(0.1, 0.2);
 }
 
 
@@ -65,6 +72,7 @@ else {
 random = NUMBER_OF_PACKAGE;
 NUMBER_OF_PACKAGE = 0;
 }Buffer_1 = Buffer_1 + random;
+energy_1 = energy_1 - randomFloat(0.2, 0.3);
 }
 
 
@@ -77,6 +85,7 @@ else {
 random = Buffer_1;
 Buffer_1 = 0;
 }Queue_1 = Queue_1 + random;
+energy_1 = energy_1 - randomFloat(0.1, 0.2);
 }
 
 
@@ -92,6 +101,7 @@ Buffer_3 = 0;
 if (Queue_3 > SENSOR_MAX_QUEUE_SIZE) {
 CONGESTION = true;
 }
+energy_3 = energy_3 - randomFloat(0.1, 0.2);
 }
 
 
@@ -107,6 +117,7 @@ Buffer_4 = 0;
 if (Queue_4 > SENSOR_MAX_QUEUE_SIZE) {
 CONGESTION = true;
 }
+energy_4 = energy_4 - randomFloat(0.1, 0.2);
 }
 
 

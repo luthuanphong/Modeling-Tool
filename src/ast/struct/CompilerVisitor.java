@@ -5,8 +5,10 @@ import java.util.HashMap;
 import ast.parser.*;
 import java.util.Random;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Locale;
 import java.util.LinkedList;
 
 public class CompilerVisitor extends BaseVisitor {
@@ -157,7 +159,7 @@ public class CompilerVisitor extends BaseVisitor {
         int maxI = ((IntLit)ast.param.get(1).accept(this, o)).value;
         return new IntLit(new Random().nextInt((maxI-minI)+1)+minI);
       case "randomFloat":
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.##",DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         df.setRoundingMode(RoundingMode.HALF_UP);
         float minF = ((FloatLit)ast.param.get(0).accept(this, o)).value;
         float maxF = ((FloatLit)ast.param.get(1).accept(this, o)).value;

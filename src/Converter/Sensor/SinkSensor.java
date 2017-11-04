@@ -19,6 +19,7 @@ public class SinkSensor extends BaseSensor {
         this.buffer = new Variable(BaseType.INT,"Buffer_"+this.sensor.Id,"0");
         this.queue = new Variable(BaseType.INT,"Queue_"+this.sensor.Id,"0");
         this.Type = SensorType.SINk;
+        this.InitiaiEnergy = new Variable(BaseType.FLOAT, "energy_"+this.sensor.Id, sensor.energy+"");
     }
 
     /**

@@ -183,6 +183,7 @@ public class InitializeData {
     		s.Name = c.getName();
     		s.energy = c.getEnergy();
     		s.token = c.getToken();
+    		s.energy = c.getEnergy();
     		switch (c.getSensorType()) {
 			case SensorType.SOURCE:
 				s.Type = 1;

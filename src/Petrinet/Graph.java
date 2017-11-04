@@ -106,6 +106,39 @@ public class Graph {
     System.out.println("Number of searching: " + count);
   }
 
+  public String getEnergy(Vertex con, HashMap<String, Integer> heuristicTable) {
+    count = 0;
+    PriorityQueue<Vertex> heap  = new PriorityQueue(100, new VCompare(heuristicTable));
+    //recursiveHeuristicSearch(con, new HashSet<String>(), initVertex, heap);
+    Vertex head = heap.poll();
+    return getBindingVar(head.toString());
+  }
+
+  private String getBindingVar(String id) {
+    String[] array = id.split("_");
+    String type = array[0];
+    String sub = array[1];
+    String num = array[2];
+    switch (type) {
+      case "src":
+        if (sub.equals("in")) {
+          return "NUMBER_OF_PACKAGE";
+        } else if (sub.equals("int")) {
+          return "Buffer_"+num;
+        } else {
+          return "Queue_"+num;
+        }
+      case "int": case "sink":
+        if (sub.equals("in")) {
+          return "Buffer_"+num;
+        } else {
+          return "Queue_"+num;
+        }
+      default:
+        return "Channel_Buffer_"+num+"_"+array[3];
+    }
+  }
+
   class VCompare implements Comparator<Vertex> {
     HashMap<String, Integer> heuristicTable;
     public VCompare(HashMap<String, Integer> table) {
