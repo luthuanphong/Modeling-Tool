@@ -10,7 +10,7 @@ public class Petrinet {
 	private ArrayList<Place> places = new ArrayList<Place>();
 	private ArrayList<Transition> transitions = new ArrayList<Transition>();
 	private ArrayList<Arc> arcs = new ArrayList<Arc>();
-	private final int MAX_SIZE = 500000;
+	private final int MAX_SIZE = 300000;
 
 	public Petrinet(String name) {
 		this.name = name;

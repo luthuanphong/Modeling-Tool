@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Position")
 public class Position {
 	@XmlAttribute(name = "X")
-	public float X;
+	public double X;
 	@XmlAttribute(name = "Y")
-	public float Y;
+	public double Y;
 }

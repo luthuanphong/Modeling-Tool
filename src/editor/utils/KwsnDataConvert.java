@@ -37,11 +37,11 @@ public class KwsnDataConvert {
 			c.setEnd(c.getCenterX()+16,c.getCenterY()+16);
 			c.setName(s.Name);
 			c.setId(s.Id);
-			//c.setEnergy(s.energy);
+			c.setEnergy(s.energy);
 			switch (s.Type) {
 			case 1:
 				c.setSensorType(1);
-				c.setToken(1);
+				c.setToken(Tryparse(s.token));
 				break;
 			case 2:
 				c.setSensorType(2);
@@ -83,5 +83,13 @@ public class KwsnDataConvert {
 			}
 		}
 		return null;
+	}
+	
+	private static int Tryparse(String value) {
+		try {
+			return Integer.parseInt(value);
+		} catch(Exception ex) {
+			return 1;
+		}
 	}
 }
