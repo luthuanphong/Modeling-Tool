@@ -1,10 +1,13 @@
 package editor.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
 import Kwsn.Link;
+import Kwsn.Sensor;
 import editor.canvas.Clip;
 import editor.canvas.ClipArc;
 import editor.canvas.ClipPlace;
@@ -31,12 +34,27 @@ public class KwsnDataConvert {
 		
 		List<Clip> list = new ArrayList<Clip>();
 		
+		Collections.sort(sensors,new Comparator<Kwsn.Sensor>() {
+
+			@Override
+			public int compare(Sensor o1, Sensor o2) {
+				// TODO Auto-generated method stub
+				try {
+					int id_1 = Integer.parseInt(o1.Id);
+					int id_2 = Integer.parseInt(o2.Id);
+					return id_1 - id_2;
+				} catch (Exception ex) {
+					return 0;
+				}
+			}
+		} );
+		
 		for(Kwsn.Sensor s : sensors) {
-			Clip c =  new ClipPlace(new Point2D(s.pos.X*100, s.pos.Y*100));
+			Clip c =  new ClipPlace(new Point2D(s.pos.X*100, s.pos.Y*100),s.Id);
 			c.setStart(c.getCenterX()-16,c.getCenterY()-16);
 			c.setEnd(c.getCenterX()+16,c.getCenterY()+16);
 			c.setName(s.Name);
-			c.setId(s.Id);
+			//c.setId(s.Id);
 			c.setEnergy(s.energy);
 			switch (s.Type) {
 			case 1:

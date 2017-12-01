@@ -1,7 +1,11 @@
 package Petrinet;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.HashMap;
+import java.util.List;
 import java.util.LinkedList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -13,6 +17,7 @@ public class Graph {
   public Vertex initVertex;
   private HashMap<String, Vertex> vertices = new HashMap<String, Vertex>();
   private int count = 0;
+  private int numOfSensors = 0;
 
   public Graph() {
   }
@@ -52,8 +57,9 @@ public class Graph {
 
   public String search(SearchStmt stmt, HashMap<String, Const> constList) {
     count = 0;
+    countNumOfSensors();
     String res = recursiveSearch("", new HashSet<String>(), initVertex, stmt, new CompilerVisitor(constList));
-    System.out.println("Number of searching: " + count);
+    //System.out.println("Number of searching: " + count);
     if (res.isEmpty()) {
       return res;
     } else {
@@ -79,6 +85,7 @@ public class Graph {
   }
 
   public Vertex searchState(SearchStmt stmt, HashMap<String, Const> constList) {
+    countNumOfSensors();
     return recursiveSearchState(new HashSet<String>(), initVertex, stmt, new CompilerVisitor(constList));
   }
 
@@ -99,44 +106,84 @@ public class Graph {
     return;
   }
 
-  public void heuristicSearch(Vertex con, HashMap<String, Integer> heuristicTable) {
+  public void heuristicSearch(Vertex con, HashMap<String, Integer> heuristicTable, HashMap<String, Const> constList) {
     count = 0;
-    PriorityQueue<Vertex> heap  = new PriorityQueue(100, new VCompare(heuristicTable));
+    countNumOfSensors();
+    PriorityQueue<Vertex> heap = new PriorityQueue<>(new VCompare(heuristicTable));
     recursiveHeuristicSearch(con, new HashSet<String>(), initVertex, heap);
-    System.out.println("Number of searching: " + count);
+    System.out.println("Number of Hsearching: " + count);
   }
 
-  public String getEnergy(Vertex con, HashMap<String, Integer> heuristicTable) {
-    count = 0;
-    PriorityQueue<Vertex> heap  = new PriorityQueue(100, new VCompare(heuristicTable));
-    //recursiveHeuristicSearch(con, new HashSet<String>(), initVertex, heap);
-    Vertex head = heap.poll();
-    return getBindingVar(head.toString());
-  }
-
-  private String getBindingVar(String id) {
-    String[] array = id.split("_");
-    String type = array[0];
-    String sub = array[1];
-    String num = array[2];
-    switch (type) {
-      case "src":
-        if (sub.equals("in")) {
-          return "NUMBER_OF_PACKAGE";
-        } else if (sub.equals("int")) {
-          return "Buffer_"+num;
-        } else {
-          return "Queue_"+num;
-        }
-      case "int": case "sink":
-        if (sub.equals("in")) {
-          return "Buffer_"+num;
-        } else {
-          return "Queue_"+num;
-        }
-      default:
-        return "Channel_Buffer_"+num+"_"+array[3];
+  public String recursiveNewSearch(String path, HashSet<String> visited, Vertex current, SearchStmt stmt, CompilerVisitor cv) {
+    if (((Boolean)stmt.accept(cv, current.getVarList())).booleanValue()) {
+      count++;
+      return path;
     }
+    Vertex chosenOne = null;
+    int min = 999999;
+    String id = "";
+    for (Edge e: current.getChildren()) {
+      if (!visited.contains(e.end.toString())) {
+        Vertex temp = e.end;
+        if (((Boolean)stmt.accept(cv, temp.getVarList())).booleanValue()) {
+          return recursiveNewSearch(path+e.id+" ", visited, temp, stmt, cv);
+        }
+        int sum = getSum(temp);
+        if (min > sum) {
+          chosenOne = temp;
+          min = sum;
+          id = e.id;
+        }
+      }
+    }
+    if (chosenOne != null) {
+      visited.add(chosenOne.toString());
+      count++;
+      String a = recursiveNewSearch(path+id+" ", visited, chosenOne, stmt, cv);
+      if (a!="") {
+        return a;
+      } else {
+        return recursiveNewSearch(path, visited, current, stmt, cv);
+      }
+    }
+    return "";
+  }
+
+  public String newSearch(SearchStmt stmt, HashMap<String, Const> constList) {
+    count = 1;
+    countNumOfSensors();
+    String res = recursiveNewSearch("", new HashSet<String>(), initVertex, stmt, new CompilerVisitor(constList));
+    //System.out.println("Number of searching: " + count);
+    if (res.isEmpty()) {
+      return res;
+    } else {
+      String s = "Dectet congestion (by Heuristc) after " + count + " steps.\nTransition sequence: " + res + "\n";
+      return s;
+    }
+  }
+
+  public float getEnergy(Vertex v) {
+    float res = 0;
+    HashMap<String, Var> varList = v.getVarList();
+    for (int i = 1; i <= numOfSensors; i++) {
+      res += Float.parseFloat(varList.get("Energy_" + Integer.toString(i)).value);
+    }
+    return res;
+  }
+
+  public int getSum(Vertex v) {
+    int res = 0;
+    HashMap<String, Var> varList = v.getVarList();
+    for (int i = 1; i <= numOfSensors; i++) {
+      res += Integer.parseInt(varList.get("Buffer_" + Integer.toString(i)).value);
+      res += Integer.parseInt(varList.get("Queue_" + Integer.toString(i)).value);
+    }
+    res += Integer.parseInt(varList.get("NUMBER_OF_PACKAGE").value);
+    res += Integer.parseInt(varList.get("Channel_Buffer_1_2").value);
+    res += Integer.parseInt(varList.get("Channel_Buffer_2_4").value);
+    res += Integer.parseInt(varList.get("Channel_Buffer_3_4").value);
+    res += Integer.parseInt(varList.get("Channel_Buffer_4_5").value);
+    return res;
   }
 
   class VCompare implements Comparator<Vertex> {
@@ -188,6 +235,18 @@ public class Graph {
       }
     }
     return heuristicTable;
+  }
+
+  public void countNumOfSensors() {
+    int i = 0;
+    HashMap<String, Var> varList = initVertex.getVarList();
+    while (true) {
+      if (!varList.containsKey("Energy_" + Integer.toString(i))) {
+        break;
+      }
+      i++;
+    }
+    numOfSensors = i;
   }
 
   @Override

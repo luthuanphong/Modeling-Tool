@@ -11,6 +11,8 @@ public class Petrinet {
 	private ArrayList<Transition> transitions = new ArrayList<Transition>();
 	private ArrayList<Arc> arcs = new ArrayList<Arc>();
 	private final int MAX_SIZE = 300000;
+	private final String CONGESTION = "CONGESTION";
+	private final String TRUE = "true";
 
 	public Petrinet(String name) {
 		this.name = name;
@@ -158,6 +160,7 @@ public class Petrinet {
 
 	private void WSNRecursiveGen(Vertex start, Graph graph, HashMap<String, Func> funcList, CompilerVisitor cv) {
 		if (graph.getSize() > MAX_SIZE) return;
+		if (isCongest(start)) return;
 		this.applyMarking(start.getMarking());
 		ArrayList<Transition> enabledTransitions = this.getEnabledTransitons();
 		for (Transition t: enabledTransitions) {
@@ -201,6 +204,10 @@ public class Petrinet {
 			h.put(v.id, new Var(v.id, v.type, v.value));
 		}
 		return h;
+	}
+
+	private boolean isCongest(Vertex v) {
+		return v.getVarList().get(CONGESTION).value == TRUE;
 	}
 
 	@Override

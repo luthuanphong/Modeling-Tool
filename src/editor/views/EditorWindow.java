@@ -1,6 +1,8 @@
 package editor.views;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import editor.canvas.Board;
 import editor.canvas.Clip;
 import editor.commands.Command;
@@ -34,6 +36,7 @@ public class EditorWindow extends VBox implements EditorInterface, ClipboardList
 	private Stage stage;
 	public static final String APP_NAME = "Modeling Tool";
 	private double ZoomSize = 1;
+	public static AtomicInteger uniqueId = new AtomicInteger();
 
 	public EditorWindow(Stage stage) {
 		// -- Setup

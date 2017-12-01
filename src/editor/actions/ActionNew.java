@@ -36,12 +36,11 @@ public class ActionNew implements Action {
 					this.editor.getBoard().getArcClip(),
 					this.editor);
 			}
-			new EditorWindow(new Stage());
-			new ActionQuit(editor).actionPerformed(e);
-		} else {
-			new EditorWindow(new Stage());
-			new ActionQuit(editor).actionPerformed(e);
 		}
+		
+		new EditorWindow(new Stage());
+		new ActionQuit(editor).actionPerformed(e);
+	
 	}
 
 	private ButtonType userChoice() {

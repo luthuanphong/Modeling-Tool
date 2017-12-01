@@ -1,24 +1,34 @@
 package editor.utils;
 
+import javax.xml.bind.JAXBException;
+
+import Petrinet.Arc;
 import Petrinet.Petrinet;
+import Petrinet.Place;
 import Petrinet.Pnml;
+import Petrinet.Transition;
 import Petrinet.xml.PnmlImporter;
+import java.lang.RuntimeException;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.ANTLRFileStream;
-import ast.ptnet.PTNETLexer;
-import ast.ptnet.PTNETParser;
+import org.antlr.v4.runtime.tree.*;
+import ast.parser.*;
 import ast.gen.*;
 import ast.struct.*;
 import java.io.*;
+import java.util.Enumeration;
 import Petrinet.*;
 import java.util.HashMap;
 import java.util.Map;
+import ast.ptnet.*;
 
 public class Verify {
 
-	private Program prog = null;
+	private static Program prog = null;
 
-	private  void writeStringToFile(String content) {
+	private static void writeStringToFile(String content) {
 		BufferedWriter bw = null;
 		FileWriter fw = null;
 		String FILENAME="out.txt";
@@ -43,13 +53,13 @@ public class Verify {
 		}
 	}
 
-	private  void println(HashMap<String, Integer> h) {
+	private static void println(HashMap<String, Integer> h) {
 		for (Map.Entry<String, Integer> t: h.entrySet()) {
 			System.out.println(t);
 		}
 	}
 
-	private  Graph genGraph(String file, Petrinet pt) throws Exception {
+	private static Graph genGraph(String file, Petrinet pt) throws Exception {
 		//Program prog = null;
 		ANTLRFileStream source = new ANTLRFileStream(file); // in bin folder
 		//try {
@@ -68,7 +78,7 @@ public class Verify {
 		return g;
 	}
 
-	public String getVeriInfo(String pnmlFile, String txtFile, String min_txtFile) throws Exception {
+		public static String getVeriInfo(String pnmlFile, String txtFile, String min_txtFile) throws Exception {
 		/*
 		* Read pnml file
 		*/
@@ -81,7 +91,12 @@ public class Verify {
 		Graph g = genGraph(txtFile, pt);
 		//writeStringToFile(s);
     StringBuilder sb = new StringBuilder();
-    sb.append("The reachability graph has ").append(g.getSize()).append(" nodes.\n");
+    sb.append("The reachability graph has ").append(g.getSize()).append(" nodes");
+		if (g.getSize()>300000) {
+			sb.append(" (partial).\n");
+		} else {
+			sb.append(" (full).\n");
+		}
 		SearchStmt stmt = (SearchStmt)prog.funcList.get("main").block.stmts.get(0);
 		String congest = g.search(stmt, prog.constList);
     if (congest.isEmpty()) {
@@ -89,8 +104,20 @@ public class Verify {
       return sb.toString();
     } else {
       Vertex congestState = g.searchState(stmt, prog.constList);
-      sb.append(congest).append("Congest state is ").append(congestState.toString());
-      return sb.toString();
+      // sb.append(congest).append("Congest state is ").append(congestState.toString()).append("\n");
+			sb.append(congest);
+			// Vertex cv = g.searchState(stmt, prog.constList);
+			// HashMap<String, Integer> ht = g.generateHeuristicTable(cv);
+			// g.heuristicSearch(cv, ht, prog.constList);
+      // return sb.toString();
+			String Hcongest = g.newSearch(stmt, prog.constList);
+			if (Hcongest.isEmpty()) {
+				sb.append("No congestion is found");
+				return sb.toString();
+			} else {
+				sb.append(Hcongest);
+				return sb.toString();
+			}
     }
 		// Graph gs = genGraph("temp_minimize.txt", pt);
 		// gs.println();

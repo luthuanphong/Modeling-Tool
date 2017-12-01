@@ -2,18 +2,17 @@ package editor.canvas;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import editor.views.EditorWindow;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 //import pt_petrinet.Place;
 
 public class ClipPlace extends AbstractClip {
-	
-	private static AtomicInteger uniqueId = new AtomicInteger();	
-
+		
 	public ClipPlace(Point2D center) {
 		super(center);
         this.setType(ClipType.Place);
-        id = String.valueOf(uniqueId.getAndIncrement());
+        id = String.valueOf(EditorWindow.uniqueId.getAndIncrement());
         name = id;
 	}
 	
@@ -21,7 +20,23 @@ public class ClipPlace extends AbstractClip {
 		// TODO Auto-generated constructor stub
 		super(start,end);
         this.setType(ClipType.Place);
-        id = String.valueOf(uniqueId.getAndIncrement());
+        id = String.valueOf(EditorWindow.uniqueId.getAndIncrement());
+	}
+	
+	public ClipPlace(Point2D start , Point2D end,String ident) {
+		// TODO Auto-generated constructor stub
+		super(start,end);
+        this.setType(ClipType.Place);
+        id = ident;
+        EditorWindow.uniqueId.set(Integer.parseInt(ident));
+	}
+	
+	public ClipPlace(Point2D center, String ident) {
+		super(center);
+        this.setType(ClipType.Place);
+        id = ident;
+        name = id;
+        EditorWindow.uniqueId.set(Integer.parseInt(ident)+1);
 	}
 
 	@Override
@@ -59,7 +74,7 @@ public class ClipPlace extends AbstractClip {
 
 	@Override
 	public void decrementId() {
-		id = String.valueOf(uniqueId.decrementAndGet());
+		id = String.valueOf(EditorWindow.uniqueId.decrementAndGet());
 	}
 
 	private void drawForeground(GraphicsContext ctx) {

@@ -14,6 +14,7 @@ public class ActionQuit implements Action {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Clipboard.getInstance().removeListener(editor);
+		this.editor.uniqueId.set(1);
 		this.editor.getStage().close();
 	}
 }
