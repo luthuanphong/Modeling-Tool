@@ -15,6 +15,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.tree.*;
 import ast.parser.*;
+import ast.ptnet.PTNETLexer;
+import ast.ptnet.PTNETParser;
 import ast.gen.*;
 import ast.struct.*;
 import java.io.*;
@@ -22,7 +24,6 @@ import java.util.Enumeration;
 import Petrinet.*;
 import java.util.HashMap;
 import java.util.Map;
-import ast.ptnet.*;
 
 public class Verify {
 
@@ -104,20 +105,21 @@ public class Verify {
       return sb.toString();
     } else {
       Vertex congestState = g.searchState(stmt, prog.constList);
-      // sb.append(congest).append("Congest state is ").append(congestState.toString()).append("\n");
-			sb.append(congest);
+      sb.append(congest).append("Congest state is ").append(congestState.toString()).append("\n");
+			//sb.append(congest);
 			// Vertex cv = g.searchState(stmt, prog.constList);
 			// HashMap<String, Integer> ht = g.generateHeuristicTable(cv);
 			// g.heuristicSearch(cv, ht, prog.constList);
       // return sb.toString();
-			String Hcongest = g.newSearch(stmt, prog.constList);
-			if (Hcongest.isEmpty()) {
-				sb.append("No congestion is found");
-				return sb.toString();
-			} else {
-				sb.append(Hcongest);
-				return sb.toString();
-			}
+			// String Hcongest = g.newSearch(stmt, prog.constList);
+			// if (Hcongest.isEmpty()) {
+			// 	sb.append("No congestion is found");
+			// 	return sb.toString();
+			// } else {
+			// 	sb.append(Hcongest);
+			// 	return sb.toString();
+			// }
+			return sb.toString();
     }
 		// Graph gs = genGraph("temp_minimize.txt", pt);
 		// gs.println();

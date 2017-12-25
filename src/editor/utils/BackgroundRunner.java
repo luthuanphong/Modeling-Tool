@@ -50,6 +50,7 @@ public class BackgroundRunner extends Thread {
 			});
 		
 		}catch(Exception ex) {
+			ex.printStackTrace();
 			//callBack.TransferSignal(ex.getMessage());
 			Platform.runLater(new Runnable() {
 				
